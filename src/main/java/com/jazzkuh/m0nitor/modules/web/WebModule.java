@@ -109,7 +109,7 @@ public class WebModule extends GenericModule {
     public boolean authorized(Request request, Response response) {
         String apiKey = request.headers("X-API-Key");
 
-        String requiredKey = FileUtils.readFileFromResources("cookie.txt");
+        String requiredKey = FileUtils.readFileFromResources("api-key.txt");
         if (apiKey == null || !apiKey.equals(requiredKey)) {
             JsonObject object = new JsonObject();
             object.addProperty("success", false);
