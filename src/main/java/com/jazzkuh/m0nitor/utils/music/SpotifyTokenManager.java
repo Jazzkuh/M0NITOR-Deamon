@@ -26,7 +26,10 @@ public class SpotifyTokenManager extends TimerTask {
 
     @Override
     public void run() {
-        if (cachedToken != null && tokenExpiration > System.currentTimeMillis()) return;
+        if (cachedToken != null && tokenExpiration > System.currentTimeMillis()) {
+            return;
+        }
+
         generateToken();
     }
 

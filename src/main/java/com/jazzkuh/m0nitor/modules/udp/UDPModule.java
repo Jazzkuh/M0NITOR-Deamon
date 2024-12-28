@@ -4,6 +4,7 @@ import com.jazzkuh.m0nitor.framework.airlite.Fader;
 import com.jazzkuh.m0nitor.framework.airlite.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedBlinkSpeed;
 import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
+import com.jazzkuh.m0nitor.modules.airlite.AirliteModule;
 import com.jazzkuh.m0nitor.modules.udp.generic.GenericListener;
 import com.jazzkuh.m0nitor.modules.udp.metering.MeteringListener;
 import com.jazzkuh.m0nitor.modules.udp.tasks.KeepAliveTask;
@@ -37,7 +38,7 @@ public class UDPModule extends GenericModule {
 
     private WebModule webModule;
 
-    public UDPModule(GenericModuleManager owningManager, WebModule webModule) {
+    public UDPModule(GenericModuleManager owningManager, WebModule webModule, AirliteModule airliteModule) {
         super(owningManager);
     }
 
