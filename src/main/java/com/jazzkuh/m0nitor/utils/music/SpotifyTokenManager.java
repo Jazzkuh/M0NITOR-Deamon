@@ -17,7 +17,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.TimerTask;
 
-@TaskInfo(delay = 5000, period = 5000, repeating = true)
 public class SpotifyTokenManager extends TimerTask {
     @Getter
     private static String cachedToken = null;
@@ -27,7 +26,7 @@ public class SpotifyTokenManager extends TimerTask {
 
     @Override
     public void run() {
-        if (cachedToken != null && System.currentTimeMillis() < tokenExpiration) return;
+        if (cachedToken != null && tokenExpiration > System.currentTimeMillis()) return;
         generateToken();
     }
 

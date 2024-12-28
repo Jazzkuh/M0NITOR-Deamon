@@ -13,7 +13,7 @@ public final class WebServer {
     public WebServer(WebModule webModule, int port) {
         this.webModule = webModule;
         Spark.port(port);
-        this.startWebSocket();
+        Spark.webSocket("/ws", WebSocketHandler.class);
         Spark.init();
 
         this.register(StatusRoute.class);
@@ -41,11 +41,6 @@ public final class WebServer {
         Spark.get("/", (request, response) -> "<img src=\"https://http.cat/418\"></img>");
         Spark.notFound("<img src=\"https://http.cat/404\"></img>");
         Spark.internalServerError("<img src=\"https://http.cat/500\"></img>");
-    }
-
-    private void startWebSocket() {
-        Spark.webSocket("/ws", WebSocketHandler.class);
-        webModule.getLogger().info("WebSocket has started!");
     }
 
     private void register(Class<?> clazz) {

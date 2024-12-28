@@ -51,17 +51,12 @@ public final class Deamon {
         spotifyTokenManager.run();
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(spotifyTokenManager, 5000, 5000);
+        timer.scheduleAtFixedRate(spotifyTokenManager, 1000, 1000);
 
         moduleManager.enable();
     }
 
     public void onShutdown() {
         moduleManager.disable();
-    }
-
-    @SneakyThrows
-    public File getRunFolder() {
-        return new File(Bootstrap.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile();
     }
 }
