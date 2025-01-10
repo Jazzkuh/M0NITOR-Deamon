@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
+import java.awt.*;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.util.LinkedList;
@@ -16,6 +17,11 @@ public class PhilipsWizLightController {
 
     @Getter
     private final Queue<DatagramPacket> packetQueue = new LinkedList<>();
+
+    @SneakyThrows
+    public static void setRGBColor(Bulb bulb, Color color, int brightness) {
+        setRGBColor(bulb, color.getRed(), color.getGreen(), color.getBlue(), brightness);
+    }
 
     @SneakyThrows
     public static void setRGBColor(Bulb bulb, int red, int green, int blue, int brightness) {

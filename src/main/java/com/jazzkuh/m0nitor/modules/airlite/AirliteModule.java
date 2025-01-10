@@ -16,10 +16,9 @@ import com.jazzkuh.modulemanager.generic.GenericModuleManager;
 import de.labystudio.spotifyapi.SpotifyAPI;
 import de.labystudio.spotifyapi.model.Track;
 import de.labystudio.spotifyapi.open.model.track.OpenTrack;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
