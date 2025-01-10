@@ -18,6 +18,8 @@ public class ButtonTriggerRegistry {
 		registerAction(new ButtonTrigger(ControlButton.LED_2A, TriggerType.BUTTON_PRESSED), MusicSkipTrigger.class);
 		registerAction(new ButtonTrigger(ControlButton.LED_3A, TriggerType.BUTTON_PRESSED), MusicPreviousTrigger.class);
 
+		registerAction(new ButtonTrigger(ControlButton.LED_6A, TriggerType.BUTTON_PRESSED), HueSceneTrigger.class);
+
 		registerAction(new ButtonTrigger(ControlButton.LED_7A, TriggerType.BUTTON_PRESSED), SceneTrigger.class);
 		registerAction(new ButtonTrigger(ControlButton.LED_7B, TriggerType.BUTTON_PRESSED), MusicAmbianceTrigger.class);
 
