@@ -13,7 +13,6 @@ public class BulbRegistry {
 	static {
 		bulbs.add(new Bulb("studio_right", "192.168.1.87", "studio"));
 		bulbs.add(new Bulb("studio_left", "192.168.1.205", "studio"));
-		bulbs.add(new Bulb("studio_led_strip", "192.168.1.92", "studio"));
 		bulbs.add(new Bulb("studio_led_strip2", "192.168.1.83"));
 		bulbs.add(new Bulb("studio_back", "192.168.1.81", "studio", "back"));
 		bulbs.add(new Bulb("studio_standing", "192.168.1.197", "studio"));

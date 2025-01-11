@@ -22,6 +22,7 @@ public class GenericProcessor {
         handlers.add(new MicrophoneHandler());
         handlers.add(new AutoCueHandler());
         handlers.add(new ButtonHandler());
+        handlers.add(new VoiceTrackHandler());
     }
 
     public void process(byte[] data) {
