@@ -28,6 +28,9 @@ public class FaderHandler extends GenericHandler {
             if (fader.isFaderActive() == active) continue;
             fader.setFaderActive(active);
 
+            if (udpModule.isVoiceTrackEnabled()) {
+                udpModule.writeToSocket((byte) 0x03, (byte) 0x0A, active ? (byte) 0x01 : (byte) 0x00);
+            }
 
             ChannelTrigger channelTrigger = new ChannelTrigger(i, active ? TriggerType.FADER_ON : TriggerType.FADER_OFF);
             if (fader.isChannelOn() && active) {

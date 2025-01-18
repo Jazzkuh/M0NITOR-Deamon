@@ -36,6 +36,9 @@ public class UDPModule extends GenericModule {
     @Getter @Setter
     private Map<String, Double> meteringValues = new HashMap<>();
 
+    @Getter @Setter
+    private boolean voiceTrackEnabled = false;
+
     private WebModule webModule;
 
     public UDPModule(GenericModuleManager owningManager, WebModule webModule, AirliteModule airliteModule) {
