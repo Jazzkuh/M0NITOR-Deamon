@@ -5,6 +5,7 @@ import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.utils.hue.HueController;
 import com.jazzkuh.m0nitor.utils.music.MusicEngine;
 import io.github.zeroone3010.yahueapi.Room;
+import io.github.zeroone3010.yahueapi.v2.Group;
 import lombok.SneakyThrows;
 
 public class HueSceneTrigger extends TriggerAction {
@@ -12,7 +13,7 @@ public class HueSceneTrigger extends TriggerAction {
 	@SneakyThrows
 	public void process() {
 		HueController hueController = Deamon.getInstance().getHueController();
-		Room room = hueController.getRoomByName("Studio");
+		Group room = hueController.getRoomByName("Studio");
 		hueController.setScene(room, "Studio");
 	}
 }

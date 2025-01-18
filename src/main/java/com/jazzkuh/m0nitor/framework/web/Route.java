@@ -9,7 +9,9 @@ public enum Route {
     CHANNEL_STATE("/channel/:channel/:state"),
     PFL_CHANNEL("/pfl/channel/:channel"),
     PFL_CONTROL("/pfl/control/:value"),
-    MEDIA("/media/:action");
+    MEDIA("/media/:action"),
+    HUE("/hue/action/:action/:light"),
+    HUE_BRIGHTNESS("/hue/brightness/:light/:brightness"),;
 
     private final String path;
 

@@ -2,14 +2,17 @@ package com.jazzkuh.m0nitor.modules.web;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.airlite.Fader;
 import com.jazzkuh.m0nitor.modules.airlite.AirliteModule;
 import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import com.jazzkuh.m0nitor.modules.web.server.WebServer;
 import com.jazzkuh.m0nitor.utils.Concurrency;
 import com.jazzkuh.m0nitor.utils.FileUtils;
+import com.jazzkuh.m0nitor.utils.hue.HueController;
 import com.jazzkuh.modulemanager.generic.GenericModule;
 import com.jazzkuh.modulemanager.generic.GenericModuleManager;
+import io.github.zeroone3010.yahueapi.v2.Light;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.eclipse.jetty.websocket.api.Session;
@@ -20,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 public class WebModule extends GenericModule {
     @Getter
     private ExecutorService webExecutors = Executors.newFixedThreadPool(1);
@@ -34,6 +36,8 @@ public class WebModule extends GenericModule {
     private AirliteModule airliteModule;
     private UDPModule udpModule;
 
+    private HueController hueController;
+
     public WebModule(GenericModuleManager owningManager, AirliteModule airliteModule) {
         super(owningManager);
     }
@@ -43,6 +47,7 @@ public class WebModule extends GenericModule {
         this.airliteModule = getOwningManager().get(AirliteModule.class);
         this.udpModule = getOwningManager().get(UDPModule.class);
         this.webServer = new WebServer(this, 8082);
+        this.hueController = Deamon.getInstance().getHueController();
     }
 
     @Override
@@ -91,6 +96,22 @@ public class WebModule extends GenericModule {
         jsonObject.addProperty("cue_aux", airliteModule.isCueAux());
 
         jsonObject.add("spotify", airliteModule.getSpotifyJson());
+        return jsonObject;
+    }
+
+    public JsonObject getLights() {
+        JsonArray lights = new JsonArray();
+        for (Light light : hueController.getLights().keySet().stream().flatMap(List::stream).toList()) {
+            JsonObject lightObject = new JsonObject();
+            lightObject.addProperty("name", light.getName());
+            lightObject.addProperty("on", light.isOn());
+            lightObject.addProperty("brightness", hueController.getLightBrightness(light));
+            lights.add(lightObject);
+        }
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("success", true);
+        jsonObject.add("lights", lights);
         return jsonObject;
     }
 
