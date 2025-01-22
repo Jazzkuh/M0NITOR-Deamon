@@ -14,6 +14,7 @@ import de.labystudio.spotifyapi.SpotifyListener;
 import de.labystudio.spotifyapi.model.Track;
 import de.labystudio.spotifyapi.open.model.track.Image;
 import de.labystudio.spotifyapi.open.model.track.OpenTrack;
+import io.github.zeroone3010.yahueapi.v2.Light;
 import lombok.SneakyThrows;
 
 import java.awt.*;
@@ -51,6 +52,10 @@ public class SpotifyEventListener implements SpotifyListener {
 
                 for (Bulb bulb : bulbs) {
                     PhilipsWizLightController.setRGBColor(bulb, newAccentColor, 100);
+                }
+
+                for (Light light : Deamon.getInstance().getHueController().getRoomByName("Studio").getLights()) {
+                    Deamon.getInstance().getHueController().setLightColor(light, newAccentColor);
                 }
             });
         }

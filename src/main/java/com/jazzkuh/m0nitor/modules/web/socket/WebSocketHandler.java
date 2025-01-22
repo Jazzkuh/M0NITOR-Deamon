@@ -13,14 +13,12 @@ public class WebSocketHandler {
     private final WebModule webModule = Deamon.getModuleManager().get(WebModule.class);
 
     @OnWebSocketConnect
-    public void onConnect(Session session) throws Exception {
+    public void onConnect(Session session) {
         webModule.getSessions().add(session);
-        webModule.getLogger().info("New connection: {}", session.getRemoteAddress().getAddress());
     }
 
     @OnWebSocketClose
     public void onClose(Session session, int statusCode, String reason) {
         webModule.getSessions().remove(session);
-        webModule.getLogger().info("Connection closed: {}", session.getRemoteAddress().getAddress());
     }
 }

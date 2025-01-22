@@ -1,21 +1,17 @@
 package com.jazzkuh.m0nitor.utils.hue;
 
-import com.jazzkuh.m0nitor.modules.web.socket.LightSocketHandler;
 import com.jazzkuh.m0nitor.utils.FileUtils;
-import io.github.zeroone3010.yahueapi.HueBridge;
-import io.github.zeroone3010.yahueapi.discovery.HueBridgeDiscoveryService;
 import io.github.zeroone3010.yahueapi.v2.*;
-import io.github.zeroone3010.yahueapi.v2.domain.update.UpdateLight;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 public class HueController {
     @Getter
@@ -41,8 +37,6 @@ public class HueController {
                 lights.put(room.getLights().stream().toList(), room);
             }
         }
-
-        hue.subscribeToEvents(new LightSocketHandler());
     }
 
 
@@ -61,6 +55,10 @@ public class HueController {
 
     public int getLightBrightness(Light light) {
         return oldHue.getAllLights().getLights().stream().filter(l -> l.getName().equals(light.getName())).toList().getFirst().getState().getBri();
+    }
+
+    public void setLightColor(Light light, Color color) {
+        light.setState(new UpdateState().color(io.github.zeroone3010.yahueapi.Color.of(color.getRed(), color.getGreen(), color.getBlue())).brightness(100).on());
     }
 
     public void setLightState(Light light, boolean on) {

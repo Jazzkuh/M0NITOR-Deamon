@@ -1,5 +1,7 @@
 package com.jazzkuh.m0nitor.modules.web;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jazzkuh.m0nitor.Deamon;
@@ -7,6 +9,7 @@ import com.jazzkuh.m0nitor.framework.airlite.Fader;
 import com.jazzkuh.m0nitor.modules.airlite.AirliteModule;
 import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import com.jazzkuh.m0nitor.modules.web.server.WebServer;
+import com.jazzkuh.m0nitor.modules.web.tasks.HueUpdateTask;
 import com.jazzkuh.m0nitor.utils.Concurrency;
 import com.jazzkuh.m0nitor.utils.FileUtils;
 import com.jazzkuh.m0nitor.utils.hue.HueController;
@@ -21,14 +24,14 @@ import spark.Response;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 public class WebModule extends GenericModule {
     @Getter
-    private ExecutorService webExecutors = Executors.newFixedThreadPool(1);
+    private final Set<Session> sessions = new HashSet<>();
 
     @Getter
-    private Set<Session> sessions = new HashSet<>();
+    private final List<Session> lightSessions = new ArrayList<>();
 
     @Getter
     private WebServer webServer;
@@ -37,6 +40,7 @@ public class WebModule extends GenericModule {
     private UDPModule udpModule;
 
     private HueController hueController;
+    private final Cache<String, JsonObject> cache = CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.SECONDS).build();
 
     public WebModule(GenericModuleManager owningManager, AirliteModule airliteModule) {
         super(owningManager);
@@ -48,6 +52,8 @@ public class WebModule extends GenericModule {
         this.udpModule = getOwningManager().get(UDPModule.class);
         this.webServer = new WebServer(this, 8082);
         this.hueController = Deamon.getInstance().getHueController();
+
+        registerComponent(new HueUpdateTask(this));
     }
 
     @Override
@@ -100,6 +106,10 @@ public class WebModule extends GenericModule {
     }
 
     public JsonObject getLights() {
+        if (cache.getIfPresent("lights") != null) {
+            return cache.getIfPresent("lights");
+        }
+
         JsonArray lights = new JsonArray();
         for (Light light : hueController.getLights().keySet().stream().flatMap(List::stream).toList()) {
             JsonObject lightObject = new JsonObject();
@@ -112,6 +122,8 @@ public class WebModule extends GenericModule {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("success", true);
         jsonObject.add("lights", lights);
+
+        cache.put("lights", jsonObject);
         return jsonObject;
     }
 
