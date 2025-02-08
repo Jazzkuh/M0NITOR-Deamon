@@ -132,8 +132,7 @@ public class WebModule extends GenericModule {
         Concurrency.async().execute(() -> getSessions().stream().filter(Session::isOpen).forEach(session -> {
             try {
                 session.getRemote().sendString(jsonObject.toString());
-            } catch (Exception exception) {
-                getLogger().warn("Failed to send message to websocket: {}\n{}", exception.getMessage(), exception.getStackTrace());
+            } catch (Exception ignored) {
             }
         }));
     }

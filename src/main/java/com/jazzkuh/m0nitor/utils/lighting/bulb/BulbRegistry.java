@@ -12,14 +12,12 @@ public class BulbRegistry {
 
 	static {
 		bulbs.add(new Bulb("studio_led_strip2", "192.168.1.83"));
-		bulbs.add(new Bulb("studio_back", "192.168.1.81", "studio", "back"));
+
+		bulbs.add(new Bulb("living_desk", "192.168.1.81"));
 
 		bulbs.add(new Bulb("living_hanging_one", "192.168.1.138", "living", "hanging", "scarlet"));
 		bulbs.add(new Bulb("living_hanging_two", "192.168.1.137", "living", "hanging", "scarlet"));
 		bulbs.add(new Bulb("living_hanging_three", "192.168.1.139", "living", "hanging", "scarlet"));
-
-		bulbs.add(new Bulb("living_table_one", "192.168.1.140", "studio", "hanging", "scarlet"));
-		bulbs.add(new Bulb("living_table_two", "192.168.1.141", "studio", "hanging", "scarlet"));
 
 		bulbs.add(new Bulb("living_yellow_lamp", "192.168.1.91", "living", "yellow_lamp", "scarlet"));
 		bulbs.add(new Bulb("living_standing", "192.168.1.88", "living", "standing", "scarlet"));
