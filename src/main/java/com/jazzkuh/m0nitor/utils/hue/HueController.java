@@ -1,5 +1,6 @@
 package com.jazzkuh.m0nitor.utils.hue;
 
+import com.jazzkuh.m0nitor.utils.Concurrency;
 import com.jazzkuh.m0nitor.utils.FileUtils;
 import io.github.zeroone3010.yahueapi.v2.*;
 import lombok.AccessLevel;
@@ -26,19 +27,20 @@ public class HueController {
 
     @SneakyThrows
     public HueController() {
-        String bridgeIp = FileUtils.readFileFromResources("hue-bridge-ip.txt");
-        String bridgeToken = FileUtils.readFileFromResources("hue-bridge-token.txt");
+        Concurrency.async().execute(() -> {
+            String bridgeIp = FileUtils.readFileFromResources("hue-bridge-ip.txt");
+            String bridgeToken = FileUtils.readFileFromResources("hue-bridge-token.txt");
 
-        setHue(new Hue(bridgeIp, bridgeToken));
-        oldHue = new io.github.zeroone3010.yahueapi.Hue(bridgeIp, bridgeToken);
+            setHue(new Hue(bridgeIp, bridgeToken));
+            oldHue = new io.github.zeroone3010.yahueapi.Hue(bridgeIp, bridgeToken);
 
-        if (hue != null) {
-            for (Group room : hue.getRooms().values()) {
-                lights.put(room.getLights().stream().toList(), room);
+            if (hue != null) {
+                for (Group room : hue.getRooms().values()) {
+                    lights.put(room.getLights().stream().toList(), room);
+                }
             }
-        }
+        });
     }
-
 
 //    private void test() {
 //        Room room = hue.getRooms().stream().toList().getFirst();

@@ -13,7 +13,6 @@ import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 
 public class ButtonHandler extends GenericHandler {
     private final UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);
-    private final AirliteModule airliteModule = Deamon.getModuleManager().get(AirliteModule.class);
 
     @Override
     public boolean shouldProcess(byte size, byte cmd) {

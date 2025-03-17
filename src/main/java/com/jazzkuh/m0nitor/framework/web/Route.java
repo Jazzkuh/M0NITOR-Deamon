@@ -11,7 +11,8 @@ public enum Route {
     PFL_CONTROL("/pfl/control/:value"),
     MEDIA("/media/:action"),
     HUE("/hue/action/:action/:light"),
-    HUE_BRIGHTNESS("/hue/brightness/:light/:brightness"),;
+    HUE_BRIGHTNESS("/hue/brightness/:light/:brightness"),
+    HUE_SCENE("/hue/scene/:group/:scene"),;
 
     private final String path;
 

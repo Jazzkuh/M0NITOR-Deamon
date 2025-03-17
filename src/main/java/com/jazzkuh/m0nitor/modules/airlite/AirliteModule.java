@@ -8,21 +8,21 @@ import com.jazzkuh.m0nitor.framework.airlite.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.modules.airlite.registry.ButtonTriggerRegistry;
-import com.jazzkuh.m0nitor.modules.airlite.tasks.LyricsFetchTask;
 import com.jazzkuh.m0nitor.modules.udp.UDPModule;
-import com.jazzkuh.m0nitor.utils.music.SpotifyTokenManager;
+import com.jazzkuh.m0nitor.utils.Concurrency;
 import com.jazzkuh.modulemanager.generic.GenericModule;
 import com.jazzkuh.modulemanager.generic.GenericModuleManager;
 import de.labystudio.spotifyapi.SpotifyAPI;
 import de.labystudio.spotifyapi.model.Track;
 import de.labystudio.spotifyapi.open.model.track.OpenTrack;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Getter
 @Setter
@@ -38,9 +38,6 @@ public class AirliteModule extends GenericModule {
     private final List<String> enabledButtons = new ArrayList<>();
 
     private final Map<String, Long> requestCache = new HashMap<>();
-
-    @Getter
-    private final Map<String, String> lyricsCache = new HashMap<>();
 
     private UDPModule udpModule;
 
@@ -70,8 +67,6 @@ public class AirliteModule extends GenericModule {
             if (triggerAction == null) continue;
             triggerAction.startActions();
         }
-
-        registerComponent(new LyricsFetchTask(this));
     }
 
     @Override
@@ -85,36 +80,34 @@ public class AirliteModule extends GenericModule {
         Track currentTrack = spotifyAPI.getTrack();
 
         if (currentTrack != null) {
-            String artists = currentTrack.getArtist();
+            AtomicReference<String> artists = new AtomicReference<>(currentTrack.getArtist());
 
-            try {
-                if (!requestCache.containsKey(currentTrack.getId())) {
-                    OpenTrack openTrack = spotifyAPI.getOpenAPI().requestOpenTrack(currentTrack);
-                    if (openTrack != null) {
-                        artists = openTrack.getArtists();
+            Concurrency.async().execute(() -> {
+                try {
+                    if (!requestCache.containsKey(currentTrack.getId())) {
+                        OpenTrack openTrack = spotifyAPI.getOpenAPI().requestOpenTrack(currentTrack);
+                        if (openTrack != null) {
+                            artists.set(openTrack.getArtists());
+                        }
                     }
+                } catch (Exception ignored) {
+                    requestCache.put(currentTrack.getId(), System.currentTimeMillis());
                 }
-            } catch (Exception ignored) {
-                requestCache.put(currentTrack.getId(), System.currentTimeMillis());
-            }
+            });
 
             spotify.addProperty("track", currentTrack.getName());
             spotify.addProperty("artist", String.valueOf(artists));
             spotify.addProperty("track_id", currentTrack.getId());
             spotify.addProperty("length", currentTrack.getLength());
-
-            String lyrics = lyricsCache.getOrDefault(currentTrack.getName() + " " + currentTrack.getArtist(), null);
-            if (lyrics != null) {
-                spotify.addProperty("lyrics", lyrics);
-            }
         }
 
         if (spotifyAPI.hasPosition()) {
             spotify.addProperty("position", spotifyAPI.getPosition());
         }
-        if (SpotifyTokenManager.getCachedToken() != null) {
-            spotify.addProperty("token", SpotifyTokenManager.getCachedToken());
-        }
+//
+//        if (SpotifyTokenManager.getCachedToken() != null) {
+//            spotify.addProperty("token", SpotifyTokenManager.getCachedToken());
+//        }
 
         spotify.addProperty("playing", Deamon.getInstance().getMusicEngine().isPlaying());
         return spotify;

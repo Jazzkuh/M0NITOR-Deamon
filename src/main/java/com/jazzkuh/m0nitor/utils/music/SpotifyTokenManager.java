@@ -2,15 +2,10 @@ package com.jazzkuh.m0nitor.utils.music;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.utils.FileUtils;
-import com.jazzkuh.modulemanager.generic.handlers.tasks.TaskInfo;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -25,6 +20,7 @@ public class SpotifyTokenManager extends TimerTask {
     private static final HttpClient client = HttpClient.newHttpClient();
 
     @Override
+    @SneakyThrows
     public void run() {
         if (cachedToken != null && tokenExpiration > System.currentTimeMillis()) {
             return;

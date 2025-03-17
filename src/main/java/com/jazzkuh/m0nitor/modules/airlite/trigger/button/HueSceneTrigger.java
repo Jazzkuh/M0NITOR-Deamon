@@ -6,11 +6,6 @@ import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedBlinkSpeed;
 import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.utils.hue.HueController;
-import com.jazzkuh.m0nitor.utils.lighting.PhilipsWizLightController;
-import com.jazzkuh.m0nitor.utils.lighting.bulb.Bulb;
-import com.jazzkuh.m0nitor.utils.lighting.bulb.BulbRegistry;
-import com.jazzkuh.m0nitor.utils.music.MusicEngine;
-import io.github.zeroone3010.yahueapi.Room;
 import io.github.zeroone3010.yahueapi.v2.Group;
 import lombok.SneakyThrows;
 

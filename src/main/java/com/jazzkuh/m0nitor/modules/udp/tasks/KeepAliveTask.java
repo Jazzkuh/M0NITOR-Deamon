@@ -16,13 +16,13 @@ public class KeepAliveTask extends TimerTask {
 
     @Override
     public void run() {
-        Concurrency.async().execute(() -> {
-            byte[] message = new byte[12];
-            message[0] = (byte) 0xA0; // Airlite
-            message[1] = (byte) 0xA0; // Airlite
-            message[2] = (byte) 0x4B; // K
-            message[3] = (byte) 0x41; // A
+        byte[] message = new byte[12];
+        message[0] = (byte) 0xA0; // Airlite
+        message[1] = (byte) 0xA0; // Airlite
+        message[2] = (byte) 0x4B; // K
+        message[3] = (byte) 0x41; // A
 
+        Concurrency.async().execute(() -> {
             try {
                 DatagramPacket sendPacket = new DatagramPacket(message, message.length, InetAddress.getByName(udpModule.getHOST_ADDRESS()), udpModule.getTRANSMIT_PORT());
                 udpModule.getReceivingSocket().send(sendPacket);

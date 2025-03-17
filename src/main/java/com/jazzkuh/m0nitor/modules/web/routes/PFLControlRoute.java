@@ -2,9 +2,7 @@ package com.jazzkuh.m0nitor.modules.web.routes;
 
 import com.google.gson.JsonObject;
 import com.jazzkuh.m0nitor.Deamon;
-import com.jazzkuh.m0nitor.framework.airlite.Fader;
 import com.jazzkuh.m0nitor.framework.web.Route;
-import com.jazzkuh.m0nitor.modules.airlite.AirliteModule;
 import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import com.jazzkuh.m0nitor.modules.web.WebModule;
 

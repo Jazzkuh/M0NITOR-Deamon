@@ -5,30 +5,29 @@ import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.web.Route;
 import com.jazzkuh.m0nitor.modules.web.WebModule;
 import com.jazzkuh.m0nitor.utils.hue.HueController;
-import io.github.zeroone3010.yahueapi.v2.Light;
+import io.github.zeroone3010.yahueapi.v2.Group;
 
 import static spark.Spark.get;
 
-public final class HueBrightnessRoute {
+public final class HueSceneRoute {
     private final HueController hueController = Deamon.getInstance().getHueController();
 
-    public HueBrightnessRoute(WebModule webModule) {
-        get(Route.HUE_BRIGHTNESS.getPath(), (request, response) -> {
+    public HueSceneRoute(WebModule webModule) {
+        get(Route.HUE_SCENE.getPath(), (request, response) -> {
             if (!webModule.authorized(request, response)) {
                 return response.body();
             }
 
-            String light = request.params(":light");
-            String brightness = request.params(":brightness");
+            String room = request.params(":group");
+            String scene = request.params(":scene");
 
-            Light hueLight = hueController.getLightByName(light);
-            if (hueLight == null) {
-                response.body(getError("Light not found").toString());
+            Group group = hueController.getRoomByName(room);
+            if (group == null) {
+                response.body(getError("Room not found").toString());
                 return response.body();
             }
 
-            hueController.setLightBrightness(hueLight, Integer.parseInt(brightness));
-
+            hueController.setScene(group, scene);
             response.body(getSuccess("Hue light updated").toString());
             return response.body();
         });

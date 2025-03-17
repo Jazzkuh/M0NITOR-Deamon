@@ -20,7 +20,8 @@ import lombok.SneakyThrows;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 public class UDPModule extends GenericModule {
@@ -59,17 +60,18 @@ public class UDPModule extends GenericModule {
     @SneakyThrows
     public void onEnable() {
         this.webModule = getOwningManager().get(WebModule.class);
-        GenericListener genericListener = new GenericListener(this, webModule, receivingSocket);
-        genericListener.start();
-
-        MeteringListener meteringListener = new MeteringListener(this, webModule, meteringSocket);
-        meteringListener.start();
 
         KeepAliveTask keepAliveTask = new KeepAliveTask(this);
         keepAliveTask.run();
 
         registerComponent(keepAliveTask);
         registerComponent(new PacketRunnable());
+
+        GenericListener genericListener = new GenericListener(this, webModule, receivingSocket);
+        genericListener.start();
+
+        MeteringListener meteringListener = new MeteringListener(this, webModule, meteringSocket);
+        meteringListener.start();
 
         // Request current cue states
         this.writeToSocket((byte) 0x02, (byte) 0x63);

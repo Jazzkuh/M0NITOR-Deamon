@@ -1,16 +1,9 @@
 package com.jazzkuh.m0nitor.modules.udp.generic.handlers;
 
 import com.jazzkuh.m0nitor.Deamon;
-import com.jazzkuh.m0nitor.framework.airlite.Fader;
-import com.jazzkuh.m0nitor.framework.airlite.channel.ChannelTrigger;
-import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerAction;
-import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerType;
 import com.jazzkuh.m0nitor.framework.udp.GenericHandler;
 import com.jazzkuh.m0nitor.modules.airlite.AirliteModule;
-import com.jazzkuh.m0nitor.modules.airlite.registry.ChannelTriggerRegistry;
 import com.jazzkuh.m0nitor.modules.udp.UDPModule;
-
-import java.util.Map;
 
 public class VoiceTrackHandler extends GenericHandler {
     private final UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);

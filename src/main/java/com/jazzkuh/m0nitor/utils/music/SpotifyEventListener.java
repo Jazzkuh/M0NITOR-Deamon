@@ -39,5 +39,6 @@ public class SpotifyEventListener implements SpotifyListener {
 
     @Override
     public void onDisconnect(Exception exception) {
+        System.err.println(exception.getMessage());
     }
 }

@@ -1,10 +1,9 @@
 package com.jazzkuh.m0nitor.utils.image;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 

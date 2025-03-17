@@ -2,7 +2,6 @@ package com.jazzkuh.m0nitor.modules.web.server;
 
 import com.jazzkuh.m0nitor.modules.web.WebModule;
 import com.jazzkuh.m0nitor.modules.web.routes.*;
-import com.jazzkuh.m0nitor.modules.web.socket.LightSocketHandler;
 import com.jazzkuh.m0nitor.modules.web.socket.WebSocketHandler;
 import spark.Spark;
 
@@ -15,7 +14,6 @@ public final class WebServer {
         this.webModule = webModule;
         Spark.port(port);
         Spark.webSocket("/ws", WebSocketHandler.class);
-        Spark.webSocket("/lights", LightSocketHandler.class);
         Spark.init();
 
         this.register(StatusRoute.class);
@@ -24,7 +22,7 @@ public final class WebServer {
         this.register(PFLChannelRoute.class);
         this.register(PFLControlRoute.class);
         this.register(HueRoute.class);
-        this.register(HueBrightnessRoute.class);
+        this.register(HueSceneRoute.class);
 
         Spark.options("/*",
                 (request, response) -> {
