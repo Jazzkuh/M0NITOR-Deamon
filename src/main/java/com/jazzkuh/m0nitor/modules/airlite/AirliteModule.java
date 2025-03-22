@@ -80,23 +80,8 @@ public class AirliteModule extends GenericModule {
         Track currentTrack = spotifyAPI.getTrack();
 
         if (currentTrack != null) {
-            AtomicReference<String> artists = new AtomicReference<>(currentTrack.getArtist());
-
-            Concurrency.async().execute(() -> {
-                try {
-                    if (!requestCache.containsKey(currentTrack.getId())) {
-                        OpenTrack openTrack = spotifyAPI.getOpenAPI().requestOpenTrack(currentTrack);
-                        if (openTrack != null) {
-                            artists.set(openTrack.getArtists());
-                        }
-                    }
-                } catch (Exception ignored) {
-                    requestCache.put(currentTrack.getId(), System.currentTimeMillis());
-                }
-            });
-
             spotify.addProperty("track", currentTrack.getName());
-            spotify.addProperty("artist", String.valueOf(artists));
+            spotify.addProperty("artist", currentTrack.getArtist());
             spotify.addProperty("track_id", currentTrack.getId());
             spotify.addProperty("length", currentTrack.getLength());
         }
@@ -104,10 +89,6 @@ public class AirliteModule extends GenericModule {
         if (spotifyAPI.hasPosition()) {
             spotify.addProperty("position", spotifyAPI.getPosition());
         }
-//
-//        if (SpotifyTokenManager.getCachedToken() != null) {
-//            spotify.addProperty("token", SpotifyTokenManager.getCachedToken());
-//        }
 
         spotify.addProperty("playing", Deamon.getInstance().getMusicEngine().isPlaying());
         return spotify;
