@@ -11,6 +11,8 @@ public class MusicPauseTrigger extends TriggerAction {
 	@Override
 	@SneakyThrows
 	public void process() {
+		if (airliteModule.getEnabledButtons().contains("disable_spotify_fader")) return;
+
 		MusicEngine musicEngine = Deamon.getInstance().getMusicEngine();
 		if (musicEngine.isPlaying()) {
 			udpModule.writeStaticLed(ControlButton.LED_1A, ControlLedColor.RED);

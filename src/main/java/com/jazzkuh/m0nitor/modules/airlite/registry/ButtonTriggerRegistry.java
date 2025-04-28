@@ -19,6 +19,7 @@ public class ButtonTriggerRegistry {
 		registerAction(new ButtonTrigger(ControlButton.LED_3A, TriggerType.BUTTON_PRESSED), MusicPreviousTrigger.class);
 
 		registerAction(new ButtonTrigger(ControlButton.LED_7A, TriggerType.BUTTON_PRESSED), HueSceneTrigger.class);
+		registerAction(new ButtonTrigger(ControlButton.LED_7B, TriggerType.BUTTON_PRESSED), DisableSpotifyFaderTrigger.class);
 
 		registerAction(new ButtonTrigger(ControlButton.LED_8A, TriggerType.BUTTON_PRESSED), BrightLightsTrigger.class);
 		registerAction(new ButtonTrigger(ControlButton.LED_8B, TriggerType.BUTTON_PRESSED), FaderSkipToggleTrigger.class);

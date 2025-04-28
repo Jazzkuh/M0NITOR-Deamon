@@ -13,7 +13,7 @@ public class BulbRegistry {
 	static {
 		bulbs.add(new Bulb("studio_led_strip2", "192.168.1.83"));
 
-		bulbs.add(new Bulb("living_desk", "192.168.1.81"));
+		bulbs.add(new Bulb("living_desk", "192.168.1.81", "living", "scarlet"));
 
 		bulbs.add(new Bulb("living_hanging_one", "192.168.1.138", "living", "hanging", "scarlet"));
 		bulbs.add(new Bulb("living_hanging_two", "192.168.1.137", "living", "hanging", "scarlet"));
