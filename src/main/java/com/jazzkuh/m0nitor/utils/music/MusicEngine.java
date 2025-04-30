@@ -13,7 +13,6 @@ public class MusicEngine {
 
 	public MusicEngine(MusicEngineProvider provider) {
 		this.spotifyAPI = SpotifyAPIFactory.create();
-		this.spotifyAPI.registerListener(new SpotifyEventListener());
 		this.spotifyAPI.initialize();
 		this.provider = provider;
 	}

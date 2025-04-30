@@ -3,6 +3,7 @@ package com.jazzkuh.m0nitor;
 import ch.qos.logback.classic.Level;
 import com.jazzkuh.m0nitor.utils.hue.HueController;
 import com.jazzkuh.m0nitor.utils.music.MusicEngine;
+import com.jazzkuh.m0nitor.utils.music.SpotifyEventListener;
 import com.jazzkuh.modulemanager.generic.GenericModuleManager;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,9 +11,6 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.*;
-import java.net.URL;
 
 public final class Deamon {
 
@@ -37,19 +35,12 @@ public final class Deamon {
         setLogger(LoggerFactory.getLogger(getClass().getSimpleName()));
         ((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME)).setLevel(Level.INFO);
 
-        try {
-            Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
-            URL imageResource = Bootstrap.class.getClassLoader().getResource("app.png");
-            java.awt.Image image = defaultToolkit.getImage(imageResource);
-            Taskbar.getTaskbar().setIconImage(image);
-        } catch (Exception e) {
-        }
-
         setModuleManager(new GenericModuleManager(logger));
         moduleManager.scanModules(getClass());
         moduleManager.load();
 
         this.musicEngine = new MusicEngine(MusicEngine.MusicEngineProvider.SPOTIFY);
+        this.musicEngine.getSpotifyAPI().registerListener(new SpotifyEventListener());
         this.hueController = new HueController();
 
         moduleManager.enable();
