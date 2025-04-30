@@ -149,9 +149,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.jazzkuh.modulemanager</groupId>
+            <groupId>com.github.Jazzkuh.ModuleManager</groupId>
             <artifactId>generic</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2776259e40</version>
             <scope>compile</scope>
         </dependency>
 

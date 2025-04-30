@@ -37,10 +37,13 @@ public final class Deamon {
         setLogger(LoggerFactory.getLogger(getClass().getSimpleName()));
         ((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME)).setLevel(Level.INFO);
 
-        Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
-        URL imageResource = Bootstrap.class.getClassLoader().getResource("app.png");
-        java.awt.Image image = defaultToolkit.getImage(imageResource);
-        Taskbar.getTaskbar().setIconImage(image);
+        try {
+            Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+            URL imageResource = Bootstrap.class.getClassLoader().getResource("app.png");
+            java.awt.Image image = defaultToolkit.getImage(imageResource);
+            Taskbar.getTaskbar().setIconImage(image);
+        } catch (Exception e) {
+        }
 
         setModuleManager(new GenericModuleManager(logger));
         moduleManager.scanModules(getClass());
