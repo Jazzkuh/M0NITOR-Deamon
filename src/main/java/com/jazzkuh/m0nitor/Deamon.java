@@ -1,6 +1,7 @@
 package com.jazzkuh.m0nitor;
 
 import ch.qos.logback.classic.Level;
+import com.jazzkuh.m0nitor.utils.TrayIconUtils;
 import com.jazzkuh.m0nitor.utils.hue.HueController;
 import com.jazzkuh.m0nitor.utils.music.MusicEngine;
 import com.jazzkuh.m0nitor.utils.music.SpotifyEventListener;
@@ -11,6 +12,9 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
+import java.net.URL;
 
 public final class Deamon {
 
@@ -34,6 +38,10 @@ public final class Deamon {
         setInstance(this);
         setLogger(LoggerFactory.getLogger(getClass().getSimpleName()));
         ((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME)).setLevel(Level.INFO);
+
+        URL imageUrl = this.getClass().getClassLoader().getResource("app.png");
+        Image image = Toolkit.getDefaultToolkit().createImage(imageUrl);
+        TrayIconUtils.create(image);
 
         setModuleManager(new GenericModuleManager(logger));
         moduleManager.scanModules(getClass());

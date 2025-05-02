@@ -18,6 +18,8 @@ public class MusicEngine {
 	}
 
 	public void playPause() {
+		if (!spotifyAPI.isConnected()) return;
+
 		Concurrency.async().execute(() -> {
 			switch (this.provider) {
 				case SPOTIFY -> spotifyAPI.pressMediaKey(MediaKey.PLAY_PAUSE);
@@ -26,6 +28,8 @@ public class MusicEngine {
 	}
 
 	public void next() {
+		if (!spotifyAPI.isConnected()) return;
+
 		Concurrency.async().execute(() -> {
 			switch (this.provider) {
 				case SPOTIFY -> spotifyAPI.pressMediaKey(MediaKey.NEXT);
@@ -34,6 +38,8 @@ public class MusicEngine {
 	}
 
 	public void previous() {
+		if (!spotifyAPI.isConnected()) return;
+
 		Concurrency.async().execute(() -> {
 			switch (this.provider) {
 				case SPOTIFY -> spotifyAPI.pressMediaKey(MediaKey.PREV);
