@@ -5,6 +5,7 @@ import com.jazzkuh.m0nitor.framework.airlite.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.utils.music.MusicEngine;
+import de.labystudio.spotifyapi.model.MediaKey;
 import lombok.SneakyThrows;
 
 public class MusicPlayPauseTrigger extends TriggerAction {
@@ -13,11 +14,7 @@ public class MusicPlayPauseTrigger extends TriggerAction {
 	@Override
 	@SneakyThrows
 	public void process() {
-		if (musicEngine.isPlaying()) {
-			musicEngine.playPause();
-		} else {
-			musicEngine.playPause();
-		}
+		musicEngine.pressMediaKey(MediaKey.PLAY_PAUSE);
 	}
 
 	@Override

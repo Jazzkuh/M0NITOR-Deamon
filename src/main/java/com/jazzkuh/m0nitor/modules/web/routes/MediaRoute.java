@@ -5,6 +5,7 @@ import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.web.Route;
 import com.jazzkuh.m0nitor.modules.web.WebModule;
 import com.jazzkuh.m0nitor.utils.music.MusicEngine;
+import de.labystudio.spotifyapi.model.MediaKey;
 
 import static spark.Spark.get;
 
@@ -19,13 +20,13 @@ public final class MediaRoute {
             MusicEngine musicEngine = Deamon.getInstance().getMusicEngine();
             switch (action.toLowerCase()) {
                 case "play":
-                    musicEngine.playPause();
+                    musicEngine.pressMediaKey(MediaKey.PLAY_PAUSE);
                     break;
                 case "next":
-                    musicEngine.next();
+                    musicEngine.pressMediaKey(MediaKey.NEXT);
                     break;
                 case "previous":
-                    musicEngine.previous();
+                    musicEngine.pressMediaKey(MediaKey.PREV);
                     break;
                 default:
                     response.body(getError("Invalid action").toString());

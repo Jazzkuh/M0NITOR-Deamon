@@ -5,14 +5,21 @@ import com.jazzkuh.m0nitor.framework.airlite.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
 import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import de.labystudio.spotifyapi.SpotifyListener;
+import de.labystudio.spotifyapi.config.SpotifyConfiguration;
 import de.labystudio.spotifyapi.model.Track;
 import lombok.SneakyThrows;
 
 public class SpotifyEventListener implements SpotifyListener {
     private final UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);
+    private final MusicEngine musicEngine;
+
+    public SpotifyEventListener(MusicEngine musicEngine) {
+        this.musicEngine = musicEngine;
+    }
 
     @Override
     public void onConnect() {
+        System.out.println("Connected to Spotify");
     }
 
     @Override
@@ -39,6 +46,9 @@ public class SpotifyEventListener implements SpotifyListener {
 
     @Override
     public void onDisconnect(Exception exception) {
-        System.err.println(exception.getMessage());
+        System.out.println("Disconnected");
+
+        ReconnectDelay next = ReconnectDelay.DEFAULT.next();
+        this.musicEngine.initializeSpotifyAPI(next, true);
     }
 }

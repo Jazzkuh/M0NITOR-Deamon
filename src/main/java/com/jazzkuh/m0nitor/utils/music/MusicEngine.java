@@ -1,5 +1,6 @@
 package com.jazzkuh.m0nitor.utils.music;
 
+import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.utils.Concurrency;
 import de.labystudio.spotifyapi.SpotifyAPI;
 import de.labystudio.spotifyapi.SpotifyAPIFactory;
@@ -14,47 +15,42 @@ public class MusicEngine {
 
 	public MusicEngine(MusicEngineProvider provider) {
 		this.spotifyAPI = SpotifyAPIFactory.create();
-
-		SpotifyConfiguration spotifyConfiguration = new SpotifyConfiguration.Builder()
-				.autoReconnect(true)
-				.exceptionReconnectDelay(10000L)
-				.build();
-
-		this.spotifyAPI.initializeAsync(spotifyConfiguration);
+		this.initializeSpotifyAPI();
 		this.provider = provider;
 	}
 
-	public void playPause() {
-		if (!spotifyAPI.isConnected()) return;
-
-		Concurrency.async().execute(() -> {
-			switch (this.provider) {
-				case SPOTIFY -> spotifyAPI.pressMediaKey(MediaKey.PLAY_PAUSE);
-			}
-		});
+	public void initializeSpotifyAPI() {
+		this.initializeSpotifyAPI(ReconnectDelay.DEFAULT, true);
 	}
 
-	public void next() {
-		if (!spotifyAPI.isConnected()) return;
-
-		Concurrency.async().execute(() -> {
-			switch (this.provider) {
-				case SPOTIFY -> spotifyAPI.pressMediaKey(MediaKey.NEXT);
+	public void initializeSpotifyAPI(ReconnectDelay reconnectDelay, boolean ignoreInitialized) {
+		if (this.spotifyAPI.isInitialized()) {
+			if (!ignoreInitialized) {
+				return;
 			}
-		});
+
+			this.spotifyAPI.stop();
+		}
+
+		this.spotifyAPI.initializeAsync(
+				new de.labystudio.spotifyapi.config.SpotifyConfiguration.Builder()
+						.autoReconnect(false)
+						.exceptionReconnectDelay(reconnectDelay.getDelay())
+						.build()
+		);
 	}
 
-	public void previous() {
-		if (!spotifyAPI.isConnected()) return;
-
-		Concurrency.async().execute(() -> {
-			switch (this.provider) {
-				case SPOTIFY -> spotifyAPI.pressMediaKey(MediaKey.PREV);
-			}
-		});
+	public void pressMediaKey(MediaKey mediaKey) {
+		try {
+			this.spotifyAPI.pressMediaKey(mediaKey);
+		} catch (IllegalArgumentException e) {
+			Deamon.getLogger().error("Failed to press media key", e);
+		}
 	}
 
 	public boolean isPlaying() {
+		if (!spotifyAPI.isConnected()) return false;
+
 		switch (this.provider) {
 			case SPOTIFY -> {
 				return spotifyAPI.isPlaying();

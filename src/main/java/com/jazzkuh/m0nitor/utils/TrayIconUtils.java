@@ -21,8 +21,8 @@ public class TrayIconUtils {
 
         PopupMenu trayPopupMenu = new PopupMenu();
 
-        MenuItem fixButtonItem = new MenuItem("Repair Buttons");
-        fixButtonItem.addActionListener(actionEvent -> {
+        MenuItem repairItem = new MenuItem("Repair");
+        repairItem.addActionListener(actionEvent -> {
             UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);
             if (udpModule == null) return;
 
@@ -36,7 +36,7 @@ public class TrayIconUtils {
                 triggerAction.startActions();
             }
         });
-        trayPopupMenu.add(fixButtonItem);
+        trayPopupMenu.add(repairItem);
 
         MenuItem closeItem = new MenuItem("Close");
         closeItem.addActionListener(actionEvent -> {
