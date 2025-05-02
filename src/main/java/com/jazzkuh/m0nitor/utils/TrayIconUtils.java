@@ -26,6 +26,8 @@ public class TrayIconUtils {
             UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);
             if (udpModule == null) return;
 
+            Deamon.getInstance().getMusicEngine().initializeSpotifyAPI();
+
             udpModule.writeStaticLed(ControlButton.ALL_LEDS, ControlLedColor.OFF);
             for (ButtonTrigger buttonTrigger : ButtonTriggerRegistry.getTriggers().keySet()) {
                 ControlButton controlButton = buttonTrigger.getControlButton();
