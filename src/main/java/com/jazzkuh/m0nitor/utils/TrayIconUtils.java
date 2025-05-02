@@ -1,12 +1,16 @@
 package com.jazzkuh.m0nitor.utils;
 
 import com.jazzkuh.m0nitor.Deamon;
+import com.jazzkuh.m0nitor.framework.airlite.button.ButtonTrigger;
+import com.jazzkuh.m0nitor.framework.airlite.button.ControlButton;
+import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
+import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerAction;
+import com.jazzkuh.m0nitor.modules.airlite.registry.ButtonTriggerRegistry;
+import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.net.URL;
 
 @UtilityClass
 public class TrayIconUtils {
@@ -16,13 +20,29 @@ public class TrayIconUtils {
         SystemTray systemTray = SystemTray.getSystemTray();
 
         PopupMenu trayPopupMenu = new PopupMenu();
-        ActionListener listener = actionEvent -> {
-            Deamon.getInstance().onShutdown();
-            System.exit(0);
-        };
+
+        MenuItem fixButtonItem = new MenuItem("Repair Buttons");
+        fixButtonItem.addActionListener(actionEvent -> {
+            UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);
+            if (udpModule == null) return;
+
+            udpModule.writeStaticLed(ControlButton.ALL_LEDS, ControlLedColor.OFF);
+            for (ButtonTrigger buttonTrigger : ButtonTriggerRegistry.getTriggers().keySet()) {
+                ControlButton controlButton = buttonTrigger.getControlButton();
+                udpModule.writeStaticLed(controlButton, ControlLedColor.GREEN);
+
+                TriggerAction triggerAction = ButtonTriggerRegistry.getAction(buttonTrigger);
+                if (triggerAction == null) continue;
+                triggerAction.startActions();
+            }
+        });
+        trayPopupMenu.add(fixButtonItem);
 
         MenuItem closeItem = new MenuItem("Close");
-        closeItem.addActionListener(listener);
+        closeItem.addActionListener(actionEvent -> {
+            Deamon.getInstance().onShutdown();
+            System.exit(0);
+        });
         trayPopupMenu.add(closeItem);
 
         TrayIcon trayIcon = new TrayIcon(image, "M0NITOR Deamon", trayPopupMenu);
