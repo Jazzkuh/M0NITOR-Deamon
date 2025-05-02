@@ -3,6 +3,7 @@ package com.jazzkuh.m0nitor.utils.music;
 import com.jazzkuh.m0nitor.utils.Concurrency;
 import de.labystudio.spotifyapi.SpotifyAPI;
 import de.labystudio.spotifyapi.SpotifyAPIFactory;
+import de.labystudio.spotifyapi.config.SpotifyConfiguration;
 import de.labystudio.spotifyapi.model.MediaKey;
 import lombok.Getter;
 
@@ -13,7 +14,13 @@ public class MusicEngine {
 
 	public MusicEngine(MusicEngineProvider provider) {
 		this.spotifyAPI = SpotifyAPIFactory.create();
-		this.spotifyAPI.initialize();
+
+		SpotifyConfiguration spotifyConfiguration = new SpotifyConfiguration.Builder()
+				.autoReconnect(true)
+				.exceptionReconnectDelay(10000L)
+				.build();
+
+		this.spotifyAPI.initializeAsync(spotifyConfiguration);
 		this.provider = provider;
 	}
 
