@@ -9,10 +9,12 @@ import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.modules.airlite.registry.ButtonTriggerRegistry;
 import com.jazzkuh.m0nitor.modules.udp.UDPModule;
+import com.jazzkuh.m0nitor.utils.Concurrency;
 import com.jazzkuh.modulemanager.generic.GenericModule;
 import com.jazzkuh.modulemanager.generic.GenericModuleManager;
 import de.labystudio.spotifyapi.SpotifyAPI;
 import de.labystudio.spotifyapi.model.Track;
+import de.labystudio.spotifyapi.open.model.track.OpenTrack;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Getter
 @Setter
@@ -34,7 +37,7 @@ public class AirliteModule extends GenericModule {
 
     private final List<String> enabledButtons = new ArrayList<>();
 
-    private final Map<String, Long> requestCache = new HashMap<>();
+    private final Map<String, String> artistCache = new HashMap<>();
 
     private UDPModule udpModule;
 
@@ -77,8 +80,21 @@ public class AirliteModule extends GenericModule {
         Track currentTrack = spotifyAPI.getTrack();
 
         if (currentTrack != null) {
+            Concurrency.async().execute(() -> {
+                try {
+                    if (!artistCache.containsKey(currentTrack.getId())) {
+                        OpenTrack openTrack = spotifyAPI.getOpenAPI().requestOpenTrack(currentTrack);
+                        if (openTrack != null) {
+                            artistCache.put(currentTrack.getId(), openTrack.getArtists());
+                        }
+                    }
+                } catch (Exception ignored) {
+                    artistCache.put(currentTrack.getId(), currentTrack.getArtist());
+                }
+            });
+
             spotify.addProperty("track", currentTrack.getName());
-            spotify.addProperty("artist", currentTrack.getArtist());
+            spotify.addProperty("artist", artistCache.get(currentTrack.getId()));
             spotify.addProperty("track_id", currentTrack.getId());
             spotify.addProperty("length", currentTrack.getLength());
         }
