@@ -75,6 +75,8 @@ public class HueController {
         room.getSceneByName(sceneName).ifPresent(Scene::activate);
     }
 
+
+
     @Nullable
     public Group getRoomByName(String roomName) {
         return hue.getRoomByName(roomName).orElse(null);

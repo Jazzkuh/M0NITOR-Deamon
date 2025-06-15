@@ -47,7 +47,7 @@ public final class Deamon {
         moduleManager.scanModules(getClass());
         moduleManager.load();
 
-        System.setProperty("SPOTIFY_API_DEBUG", "true");
+        System.setProperty("SPOTIFY_API_DEBUG", "false");
 
         this.musicEngine = new MusicEngine(MusicEngine.MusicEngineProvider.SPOTIFY);
         this.musicEngine.getSpotifyAPI().registerListener(new SpotifyEventListener(this.musicEngine));

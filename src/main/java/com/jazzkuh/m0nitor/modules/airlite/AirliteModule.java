@@ -8,6 +8,7 @@ import com.jazzkuh.m0nitor.framework.airlite.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.modules.airlite.registry.ButtonTriggerRegistry;
+import com.jazzkuh.m0nitor.modules.airlite.tasks.FlashingTask;
 import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import com.jazzkuh.m0nitor.utils.Concurrency;
 import com.jazzkuh.modulemanager.generic.GenericModule;
@@ -39,6 +40,8 @@ public class AirliteModule extends GenericModule {
 
     private final Map<String, String> artistCache = new HashMap<>();
 
+    private int flashingSceneIndex = 0;
+
     private UDPModule udpModule;
 
     public AirliteModule(GenericModuleManager owningManager) {
@@ -67,6 +70,8 @@ public class AirliteModule extends GenericModule {
             if (triggerAction == null) continue;
             triggerAction.startActions();
         }
+
+        registerComponent(new FlashingTask(this));
     }
 
     @Override
@@ -105,5 +110,9 @@ public class AirliteModule extends GenericModule {
 
         spotify.addProperty("playing", Deamon.getInstance().getMusicEngine().isPlaying());
         return spotify;
+    }
+
+    public void incrementFlashingSceneIndex() {
+        flashingSceneIndex++;
     }
 }
