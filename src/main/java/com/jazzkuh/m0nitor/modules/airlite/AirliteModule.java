@@ -38,8 +38,6 @@ public class AirliteModule extends GenericModule {
 
     private final List<String> enabledButtons = new ArrayList<>();
 
-    private final Map<String, String> artistCache = new HashMap<>();
-
     private int flashingSceneIndex = 0;
 
     private UDPModule udpModule;
@@ -85,21 +83,8 @@ public class AirliteModule extends GenericModule {
         Track currentTrack = spotifyAPI.getTrack();
 
         if (currentTrack != null) {
-            Concurrency.async().execute(() -> {
-                try {
-                    if (!artistCache.containsKey(currentTrack.getId())) {
-                        OpenTrack openTrack = spotifyAPI.getOpenAPI().requestOpenTrack(currentTrack);
-                        if (openTrack != null) {
-                            artistCache.put(currentTrack.getId(), openTrack.getArtists());
-                        }
-                    }
-                } catch (Exception ignored) {
-                    artistCache.put(currentTrack.getId(), currentTrack.getArtist());
-                }
-            });
-
             spotify.addProperty("track", currentTrack.getName());
-            spotify.addProperty("artist", artistCache.get(currentTrack.getId()));
+            spotify.addProperty("artist", currentTrack.getArtist());
             spotify.addProperty("track_id", currentTrack.getId());
             spotify.addProperty("length", currentTrack.getLength());
         }
