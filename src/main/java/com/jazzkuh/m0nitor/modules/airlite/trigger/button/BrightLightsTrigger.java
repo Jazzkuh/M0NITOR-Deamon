@@ -5,6 +5,7 @@ import com.jazzkuh.m0nitor.framework.airlite.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedBlinkSpeed;
 import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerAction;
+import com.jazzkuh.m0nitor.modules.airlite.AirliteModule;
 import com.jazzkuh.m0nitor.utils.hue.HueController;
 import com.jazzkuh.m0nitor.utils.lighting.PhilipsWizLightController;
 import com.jazzkuh.m0nitor.utils.lighting.bulb.Bulb;
@@ -18,8 +19,12 @@ public class BrightLightsTrigger extends TriggerAction {
 	public void process() {
 		HueController hueController = Deamon.getInstance().getHueController();
 
+		for (ControlButton button : Deamon.getModuleManager().get(AirliteModule.class).getHueButtons()) {
+			udpModule.writeStaticLed(button, ControlLedColor.GREEN);
+		}
+
 		if (airliteModule.getEnabledButtons().contains("bright_lights")) {
-			udpModule.writeStaticLed(ControlButton.LED_8A, ControlLedColor.GREEN);
+			udpModule.writeStaticLed(ControlButton.LED_8B, ControlLedColor.GREEN);
 			airliteModule.getEnabledButtons().remove("bright_lights");
 
 			PhilipsWizLightController.setState(BulbRegistry.getBulbByName("studio_led_strip2"), false);
@@ -34,7 +39,7 @@ public class BrightLightsTrigger extends TriggerAction {
 			Group room = hueController.getRoomByName("Studio");
 			hueController.setScene(room, "Studio");
 		} else {
-			udpModule.writeBlinkingLed(ControlButton.LED_8A, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+			udpModule.writeBlinkingLed(ControlButton.LED_8B, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
 			airliteModule.getEnabledButtons().add("bright_lights");
 			Group room = hueController.getRoomByName("Studio");
 			hueController.setScene(room, "white");
@@ -48,9 +53,9 @@ public class BrightLightsTrigger extends TriggerAction {
 	@Override
 	public void startActions() {
 		if (airliteModule.getEnabledButtons().contains("bright_lights")) {
-			udpModule.writeBlinkingLed(ControlButton.LED_8A, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+			udpModule.writeBlinkingLed(ControlButton.LED_8B, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
 		} else {
-			udpModule.writeStaticLed(ControlButton.LED_8A, ControlLedColor.GREEN);
+			udpModule.writeStaticLed(ControlButton.LED_8B, ControlLedColor.GREEN);
 		}
 	}
 }

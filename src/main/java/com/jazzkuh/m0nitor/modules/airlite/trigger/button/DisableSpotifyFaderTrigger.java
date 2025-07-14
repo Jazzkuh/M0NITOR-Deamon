@@ -11,10 +11,10 @@ public class DisableSpotifyFaderTrigger extends TriggerAction {
 	@SneakyThrows
 	public void process() {
 		if (!airliteModule.getEnabledButtons().contains("disable_spotify_fader")) {
-			udpModule.writeBlinkingLed(ControlButton.LED_7B, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+			udpModule.writeBlinkingLed(ControlButton.LED_7A, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
 			airliteModule.getEnabledButtons().add("disable_spotify_fader");
 		} else {
-			udpModule.writeStaticLed(ControlButton.LED_7B, ControlLedColor.GREEN);
+			udpModule.writeStaticLed(ControlButton.LED_7A, ControlLedColor.GREEN);
 			airliteModule.getEnabledButtons().remove("disable_spotify_fader");
 		}
 	}
@@ -22,9 +22,9 @@ public class DisableSpotifyFaderTrigger extends TriggerAction {
 	@Override
 	public void startActions() {
 		if (!airliteModule.getEnabledButtons().contains("disable_spotify_fader")) {
-			udpModule.writeStaticLed(ControlButton.LED_7B, ControlLedColor.GREEN);
+			udpModule.writeStaticLed(ControlButton.LED_7A, ControlLedColor.GREEN);
 		} else {
-			udpModule.writeBlinkingLed(ControlButton.LED_7B, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+			udpModule.writeBlinkingLed(ControlButton.LED_7A, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
 		}
 	}
 }

@@ -11,36 +11,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ButtonTriggerRegistry {
-	private static @Getter Map<ButtonTrigger, Class<? extends TriggerAction>> triggers = new HashMap<>();
+	@Getter
+	private static Map<ButtonTrigger, TriggerAction> triggers = new HashMap<>();
 
 	static {
-		registerAction(new ButtonTrigger(ControlButton.LED_1A, TriggerType.BUTTON_PRESSED), MusicPlayPauseTrigger.class);
-		registerAction(new ButtonTrigger(ControlButton.LED_2A, TriggerType.BUTTON_PRESSED), MusicSkipTrigger.class);
-		registerAction(new ButtonTrigger(ControlButton.LED_3A, TriggerType.BUTTON_PRESSED), MusicPreviousTrigger.class);
+		registerAction(new ButtonTrigger(ControlButton.LED_1A, TriggerType.BUTTON_PRESSED), new MusicPlayPauseTrigger());
+		registerAction(new ButtonTrigger(ControlButton.LED_2A, TriggerType.BUTTON_PRESSED), new MusicSkipTrigger());
+		registerAction(new ButtonTrigger(ControlButton.LED_3A, TriggerType.BUTTON_PRESSED), new MusicPreviousTrigger());
 
-		registerAction(new ButtonTrigger(ControlButton.LED_6A, TriggerType.BUTTON_PRESSED), FlashingToggleTrigger.class);
+		registerAction(new ButtonTrigger(ControlButton.LED_7A, TriggerType.BUTTON_PRESSED), new DisableSpotifyFaderTrigger());
+		registerAction(new ButtonTrigger(ControlButton.LED_8A, TriggerType.BUTTON_PRESSED), new FaderSkipToggleTrigger());
 
-		registerAction(new ButtonTrigger(ControlButton.LED_7A, TriggerType.BUTTON_PRESSED), HueSceneTrigger.class);
-		registerAction(new ButtonTrigger(ControlButton.LED_7B, TriggerType.BUTTON_PRESSED), DisableSpotifyFaderTrigger.class);
+		registerAction(new ButtonTrigger(ControlButton.LED_7B, TriggerType.BUTTON_PRESSED), new FlashingToggleTrigger());
+		registerAction(new ButtonTrigger(ControlButton.LED_8B, TriggerType.BUTTON_PRESSED), new BrightLightsTrigger());
 
-		registerAction(new ButtonTrigger(ControlButton.LED_8A, TriggerType.BUTTON_PRESSED), BrightLightsTrigger.class);
-		registerAction(new ButtonTrigger(ControlButton.LED_8B, TriggerType.BUTTON_PRESSED), FaderSkipToggleTrigger.class);
+		registerAction(new ButtonTrigger(ControlButton.LED_1B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Rio 2", ControlButton.LED_1B));
+		registerAction(new ButtonTrigger(ControlButton.LED_2B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Chinatown", ControlButton.LED_2B));
+		registerAction(new ButtonTrigger(ControlButton.LED_3B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Disturbia", ControlButton.LED_3B));
+		registerAction(new ButtonTrigger(ControlButton.LED_4B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Fairfax", ControlButton.LED_4B));
+		registerAction(new ButtonTrigger(ControlButton.LED_5B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Miami", ControlButton.LED_5B));
+		registerAction(new ButtonTrigger(ControlButton.LED_6B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Osaka", ControlButton.LED_6B));
 	}
 
-	public static void registerAction(ButtonTrigger buttonTrigger, Class<? extends TriggerAction> triggerClass) {
-		triggers.put(buttonTrigger, triggerClass);
+	public static void registerAction(ButtonTrigger buttonTrigger, TriggerAction triggerAction) {
+		triggers.put(buttonTrigger, triggerAction);
 	}
 
 	public static TriggerAction getAction(ButtonTrigger buttonTrigger) {
-		Class<? extends TriggerAction> triggerClass = triggers.keySet().stream().filter(buttonTrigger1 -> equals(buttonTrigger1, buttonTrigger)).map(triggers::get).findFirst().orElse(null);
-		if (triggerClass == null) return null;
-
-		try {
-			return triggerClass.getConstructor().newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return triggers.keySet().stream().filter(buttonTrigger1 -> equals(buttonTrigger1, buttonTrigger)).map(triggers::get).findFirst().orElse(null);
 	}
 
 	public static boolean isKnownButton(ControlButton controlButton) {

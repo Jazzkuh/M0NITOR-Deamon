@@ -11,10 +11,10 @@ public class FaderSkipToggleTrigger extends TriggerAction {
 	@SneakyThrows
 	public void process() {
 		if (!airliteModule.getEnabledButtons().contains("fader_skip")) {
-			udpModule.writeBlinkingLed(ControlButton.LED_8B, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+			udpModule.writeBlinkingLed(ControlButton.LED_8A, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
 			airliteModule.getEnabledButtons().add("fader_skip");
 		} else {
-			udpModule.writeStaticLed(ControlButton.LED_8B, ControlLedColor.GREEN);
+			udpModule.writeStaticLed(ControlButton.LED_8A, ControlLedColor.GREEN);
 			airliteModule.getEnabledButtons().remove("fader_skip");
 		}
 	}
@@ -22,9 +22,9 @@ public class FaderSkipToggleTrigger extends TriggerAction {
 	@Override
 	public void startActions() {
 		if (!airliteModule.getEnabledButtons().contains("fader_skip")) {
-			udpModule.writeStaticLed(ControlButton.LED_8B, ControlLedColor.GREEN);
+			udpModule.writeStaticLed(ControlButton.LED_8A, ControlLedColor.GREEN);
 		} else {
-			udpModule.writeBlinkingLed(ControlButton.LED_8B, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+			udpModule.writeBlinkingLed(ControlButton.LED_8A, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
 		}
 	}
 }

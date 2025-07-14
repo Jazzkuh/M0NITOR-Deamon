@@ -40,6 +40,12 @@ public class AirliteModule extends GenericModule {
 
     private int flashingSceneIndex = 0;
 
+    private final ControlButton[] hueButtons = new ControlButton[]{
+            ControlButton.LED_1B, ControlButton.LED_2B, ControlButton.LED_3B,
+            ControlButton.LED_4B, ControlButton.LED_5B, ControlButton.LED_6B
+    };
+
+
     private UDPModule udpModule;
 
     public AirliteModule(GenericModuleManager owningManager) {
