@@ -73,10 +73,8 @@
                         <configuration>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>com.jazzkuh.m0nitor.Bootstrap</mainClass>
                                 </transformer>
                             </transformers>
@@ -95,16 +93,49 @@
                 </executions>
             </plugin>
 
+            <!-- Executable JAR -->
             <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
+                <groupId>com.jolira</groupId>
+                <artifactId>onejar-maven-plugin</artifactId>
+                <version>1.4.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <mainClass>com.jazzkuh.m0nitor.Bootstrap</mainClass>
+                            <attachToBuild>true</attachToBuild>
+                            <filename>${project.build.finalName}-onejar.${project.packaging}</filename>
+                        </configuration>
+                        <goals>
+                            <goal>one-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Executable MacOSX Application -->
+            <plugin>
+                <groupId>de.perdian.maven.plugins</groupId>
+                <artifactId>macosappbundler-maven-plugin</artifactId>
+                <version>1.21.1</version>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib</classpathPrefix>
-                        </manifest>
-                    </archive>
+                    <plist>
+                        <CFBundleName>M0NITOR Deamon</CFBundleName>
+                        <CFBundleIconFile>src/main/resources/app.icns</CFBundleIconFile>
+                        <JVMMainClassName>com.jazzkuh.m0nitor.Bootstrap</JVMMainClassName>
+                    </plist>
+                    <codesign>
+                        <identity>-</identity>
+                    </codesign>
                 </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -120,7 +151,7 @@
         <dependency>
             <groupId>com.github.Jazzkuh.ModuleManager</groupId>
             <artifactId>generic</artifactId>
-            <version>2776259e40</version>
+            <version>0b399761d5</version>
             <scope>compile</scope>
         </dependency>
 
