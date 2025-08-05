@@ -2,6 +2,7 @@ package com.jazzkuh.m0nitor.utils.hue;
 
 import com.jazzkuh.m0nitor.utils.Concurrency;
 import com.jazzkuh.m0nitor.utils.FileUtils;
+import io.github.zeroone3010.yahueapi.HueBridgeConnectionBuilder;
 import io.github.zeroone3010.yahueapi.v2.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class HueController {
     @Getter
@@ -50,6 +52,13 @@ public class HueController {
 //        }
 //    }
 
+    private void fetchToken(String bridgeIp) {
+        CompletableFuture<String> apiKey = new HueBridgeConnectionBuilder(bridgeIp).initializeApiConnection("M0NITOR");
+        apiKey.whenComplete((key, err) -> {
+            System.out.println("Store this API key for future use: " + key);
+        });
+    }
+
     @Nullable
     public Light getLightByName(String lightName) {
         return lights.keySet().stream().flatMap(List::stream).filter(light -> light.getName().equals(lightName)).toList().getFirst();
@@ -74,8 +83,6 @@ public class HueController {
     public void setScene(Group room, String sceneName) {
         room.getSceneByName(sceneName).ifPresent(Scene::activate);
     }
-
-
 
     @Nullable
     public Group getRoomByName(String roomName) {
