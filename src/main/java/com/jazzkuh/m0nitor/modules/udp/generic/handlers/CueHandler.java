@@ -64,5 +64,8 @@ public class CueHandler extends GenericHandler {
         byte data1 = data[5];
         byte state = (byte) (data1 & (byte) 0x01);
         airliteModule.setCueAux(state == (byte) 0x01);
+
+        byte state2 = (byte) (data1 & (byte) 0x04);
+        airliteModule.setCueAir(state2 != (byte) 0x00);
     }
 }

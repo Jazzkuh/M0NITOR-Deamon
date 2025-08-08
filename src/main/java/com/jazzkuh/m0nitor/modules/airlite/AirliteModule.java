@@ -33,6 +33,7 @@ public class AirliteModule extends GenericModule {
     private boolean cueAux = false;
     private boolean autoCueCrm = false;
     private boolean autoCueAnnouncer = false;
+    private boolean cueAir = false;
 
     private long microphoneOn = -1;
 

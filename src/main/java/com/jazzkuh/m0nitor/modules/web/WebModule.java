@@ -84,6 +84,7 @@ public class WebModule extends GenericModule {
         jsonObject.addProperty("auto_cue_crm", airliteModule.isAutoCueCrm());
         jsonObject.addProperty("auto_cue_announcer", airliteModule.isAutoCueAnnouncer());
         jsonObject.addProperty("cue_aux", airliteModule.isCueAux());
+        jsonObject.addProperty("cue_air", airliteModule.isCueAir());
 
         jsonObject.add("spotify", airliteModule.getSpotifyJson());
         return jsonObject;
