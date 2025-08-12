@@ -27,6 +27,10 @@ public class HueController {
     @Setter(AccessLevel.PRIVATE)
     private Map<List<Light>, Group> lights = new HashMap<>();
 
+    @Setter
+    @Getter
+    private String lastScene = "Osaka";
+
     @SneakyThrows
     public HueController() {
         Concurrency.async().execute(() -> {

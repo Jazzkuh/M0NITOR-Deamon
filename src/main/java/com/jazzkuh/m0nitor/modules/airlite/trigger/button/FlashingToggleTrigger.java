@@ -27,7 +27,7 @@ public class FlashingToggleTrigger extends TriggerAction {
 		} else {
 			udpModule.writeStaticLed(ControlButton.LED_7B, ControlLedColor.GREEN);
 			airliteModule.getEnabledButtons().remove("flashing");
-			hueController.setScene(room, "Chinatown");
+			hueController.setScene(room, hueController.getLastScene());
 		}
 	}
 

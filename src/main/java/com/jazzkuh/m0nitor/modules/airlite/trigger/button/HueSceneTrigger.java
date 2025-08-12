@@ -33,6 +33,7 @@ public class HueSceneTrigger extends TriggerAction {
 			udpModule.writeStaticLed(button, ControlLedColor.GREEN);
 		}
 
+		hueController.setLastScene(getScene());
 		hueController.setScene(room, getScene());
 	}
 }
