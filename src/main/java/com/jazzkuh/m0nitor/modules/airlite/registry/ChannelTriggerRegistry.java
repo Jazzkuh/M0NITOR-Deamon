@@ -19,11 +19,6 @@ public class ChannelTriggerRegistry {
 	static {
 		registerAction(new ChannelTrigger(TriggerType.MICROPHONE_ON), OnAirLightTrigger.class);
 		registerAction(new ChannelTrigger(TriggerType.MICROPHONE_OFF), RegularLightTrigger.class);
-		registerAction(new ChannelTrigger(8, TriggerType.FADER_AND_CHANNEL_ON), MusicSkipStartTrigger.class);
-		registerAction(new ChannelTrigger(8, TriggerType.CHANNEL_OFF), MusicPauseTrigger.class);
-		registerAction(new ChannelTrigger(8, TriggerType.FADER_OFF), MusicPauseTrigger.class);
-		registerAction(new ChannelTrigger(8, TriggerType.FADER_OFF_CUE_ON), CueOnTrigger.class);
-		registerAction(new ChannelTrigger(8, TriggerType.FADER_OFF_CUE_OFF), CueOffTrigger.class);
 	}
 
 	public static void registerAction(ChannelTrigger channelTrigger, Class<? extends TriggerAction> triggerClass) {
