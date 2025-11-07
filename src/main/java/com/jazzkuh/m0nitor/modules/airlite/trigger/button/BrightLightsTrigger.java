@@ -7,9 +7,6 @@ import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.modules.airlite.AirliteModule;
 import com.jazzkuh.m0nitor.utils.hue.HueController;
-import com.jazzkuh.m0nitor.utils.lighting.PhilipsWizLightController;
-import com.jazzkuh.m0nitor.utils.lighting.bulb.Bulb;
-import com.jazzkuh.m0nitor.utils.lighting.bulb.BulbRegistry;
 import io.github.zeroone3010.yahueapi.v2.Group;
 import lombok.SneakyThrows;
 
@@ -27,15 +24,6 @@ public class BrightLightsTrigger extends TriggerAction {
 			udpModule.writeStaticLed(ControlButton.LED_8B, ControlLedColor.GREEN);
 			airliteModule.getEnabledButtons().remove("bright_lights");
 
-			PhilipsWizLightController.setState(BulbRegistry.getBulbByName("studio_led_strip2"), false);
-			for (Bulb bulb : BulbRegistry.getBulbsByGroups("scarlet")) {
-				PhilipsWizLightController.setScene(bulb, PhilipsWizLightController.Scene.Sunset, 100);
-			}
-
-			for (Bulb bulb : BulbRegistry.getBulbsByGroups("warm_white")) {
-				PhilipsWizLightController.setColorTemperature(bulb, 2200, 100);
-			}
-
 			Group room = hueController.getRoomByName("Studio");
 			hueController.setScene(room, "Studio");
 		} else {
@@ -43,10 +31,6 @@ public class BrightLightsTrigger extends TriggerAction {
 			airliteModule.getEnabledButtons().add("bright_lights");
 			Group room = hueController.getRoomByName("Studio");
 			hueController.setScene(room, "white");
-
-			for (Bulb bulb : BulbRegistry.getAllBulbs()) {
-				PhilipsWizLightController.setColorTemperature(bulb, 6500, 100);
-			}
 		}
 	}
 

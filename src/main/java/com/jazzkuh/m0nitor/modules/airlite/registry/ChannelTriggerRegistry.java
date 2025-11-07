@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class ChannelTriggerRegistry {
 	private static Map<ChannelTrigger, Class<? extends TriggerAction>> triggers = new HashMap<>();
-    private static final int spotifyChannel = 8;
+    private static final int spotifyChannel = 7;
 
 	static {
 		registerAction(new ChannelTrigger(TriggerType.MICROPHONE_ON), OnAirLightTrigger.class);
