@@ -22,15 +22,15 @@ public class ButtonTriggerRegistry {
 		registerAction(new ButtonTrigger(ControlButton.LED_7A, TriggerType.BUTTON_PRESSED), new DisableSpotifyFaderTrigger());
 		registerAction(new ButtonTrigger(ControlButton.LED_8A, TriggerType.BUTTON_PRESSED), new FaderSkipToggleTrigger());
 
-		registerAction(new ButtonTrigger(ControlButton.LED_7B, TriggerType.BUTTON_PRESSED), new FlashingToggleTrigger());
-		registerAction(new ButtonTrigger(ControlButton.LED_8B, TriggerType.BUTTON_PRESSED), new BrightLightsTrigger());
+		registerAction(new ButtonTrigger(ControlButton.LED_6B, TriggerType.BUTTON_PRESSED), new FlashingToggleTrigger());
+		registerAction(new ButtonTrigger(ControlButton.LED_7B, TriggerType.BUTTON_PRESSED), new BrightLightsTrigger());
+        registerAction(new ButtonTrigger(ControlButton.LED_8B, TriggerType.BUTTON_PRESSED), new HueLightsTrigger());
 
-		registerAction(new ButtonTrigger(ControlButton.LED_1B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Rio", ControlButton.LED_1B));
+		registerAction(new ButtonTrigger(ControlButton.LED_1B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Studio", ControlButton.LED_1B));
 		registerAction(new ButtonTrigger(ControlButton.LED_2B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Chinatown", ControlButton.LED_2B));
-		registerAction(new ButtonTrigger(ControlButton.LED_3B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Disturbia", ControlButton.LED_3B));
+		registerAction(new ButtonTrigger(ControlButton.LED_3B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Amberbloesem", ControlButton.LED_3B));
 		registerAction(new ButtonTrigger(ControlButton.LED_4B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Fairfax", ControlButton.LED_4B));
 		registerAction(new ButtonTrigger(ControlButton.LED_5B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Miami", ControlButton.LED_5B));
-		registerAction(new ButtonTrigger(ControlButton.LED_6B, TriggerType.BUTTON_PRESSED), new HueSceneTrigger("Osaka", ControlButton.LED_6B));
 	}
 
 	public static void registerAction(ButtonTrigger buttonTrigger, TriggerAction triggerAction) {

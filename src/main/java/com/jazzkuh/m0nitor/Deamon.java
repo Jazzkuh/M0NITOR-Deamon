@@ -42,6 +42,7 @@ public final class Deamon {
         URL imageUrl = this.getClass().getClassLoader().getResource("app.png");
         Image image = Toolkit.getDefaultToolkit().createImage(imageUrl);
         TrayIconUtils.create(image);
+        this.hueController = new HueController();
 
         setModuleManager(new GenericModuleManager(logger));
         moduleManager.scanModules(getClass());
@@ -51,7 +52,6 @@ public final class Deamon {
 
         this.musicEngine = new MusicEngine(MusicEngine.MusicEngineProvider.SPOTIFY);
         this.musicEngine.getSpotifyAPI().registerListener(new SpotifyEventListener(this.musicEngine));
-        this.hueController = new HueController();
 
         moduleManager.enable();
     }

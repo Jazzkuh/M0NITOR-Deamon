@@ -66,6 +66,15 @@ public class WebModule extends GenericModule {
             double value = udpModule.getMeteringValues().get(key);
             meteringValues.addProperty(key, value > 55 ? 55 : value);
         }
+
+        if (udpModule.getMeteringValues().isEmpty()) {
+            meteringValues.addProperty("program_left", 0);
+            meteringValues.addProperty("program_right", 0);
+            meteringValues.addProperty("phones_left", 0);
+            meteringValues.addProperty("phones_right", 0);
+            meteringValues.addProperty("crm_left", 0);
+            meteringValues.addProperty("crm_right", 0);
+        }
         jsonObject.add("metering", meteringValues);
 
         jsonObject.addProperty("microphone_on", airliteModule.getMicrophoneOn() != -1);

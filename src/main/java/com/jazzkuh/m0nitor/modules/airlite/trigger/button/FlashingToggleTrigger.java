@@ -22,10 +22,10 @@ public class FlashingToggleTrigger extends TriggerAction {
 		}
 
 		if (!airliteModule.getEnabledButtons().contains("flashing")) {
-			udpModule.writeBlinkingLed(ControlButton.LED_7B, ControlLedColor.GREEN, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+			udpModule.writeBlinkingLed(ControlButton.LED_6B, ControlLedColor.GREEN, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
 			airliteModule.getEnabledButtons().add("flashing");
 		} else {
-			udpModule.writeStaticLed(ControlButton.LED_7B, ControlLedColor.GREEN);
+			udpModule.writeStaticLed(ControlButton.LED_6B, ControlLedColor.GREEN);
 			airliteModule.getEnabledButtons().remove("flashing");
 			hueController.setScene(room, hueController.getLastScene());
 		}
@@ -34,9 +34,9 @@ public class FlashingToggleTrigger extends TriggerAction {
 	@Override
 	public void startActions() {
 		if (!airliteModule.getEnabledButtons().contains("flashing")) {
-			udpModule.writeStaticLed(ControlButton.LED_7B, ControlLedColor.GREEN);
+			udpModule.writeStaticLed(ControlButton.LED_6B, ControlLedColor.GREEN);
 		} else {
-			udpModule.writeBlinkingLed(ControlButton.LED_7B, ControlLedColor.GREEN, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+			udpModule.writeBlinkingLed(ControlButton.LED_6B, ControlLedColor.GREEN, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
 		}
 	}
 }

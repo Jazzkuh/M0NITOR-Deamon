@@ -21,13 +21,13 @@ public class BrightLightsTrigger extends TriggerAction {
 		}
 
 		if (airliteModule.getEnabledButtons().contains("bright_lights")) {
-			udpModule.writeStaticLed(ControlButton.LED_8B, ControlLedColor.GREEN);
+			udpModule.writeStaticLed(ControlButton.LED_7B, ControlLedColor.GREEN);
 			airliteModule.getEnabledButtons().remove("bright_lights");
 
 			Group room = hueController.getRoomByName("Studio");
 			hueController.setScene(room, "Studio");
 		} else {
-			udpModule.writeBlinkingLed(ControlButton.LED_8B, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+			udpModule.writeBlinkingLed(ControlButton.LED_7B, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
 			airliteModule.getEnabledButtons().add("bright_lights");
 			Group room = hueController.getRoomByName("Studio");
 			hueController.setScene(room, "white");
@@ -37,9 +37,9 @@ public class BrightLightsTrigger extends TriggerAction {
 	@Override
 	public void startActions() {
 		if (airliteModule.getEnabledButtons().contains("bright_lights")) {
-			udpModule.writeBlinkingLed(ControlButton.LED_8B, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+			udpModule.writeBlinkingLed(ControlButton.LED_7B, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
 		} else {
-			udpModule.writeStaticLed(ControlButton.LED_8B, ControlLedColor.GREEN);
+			udpModule.writeStaticLed(ControlButton.LED_7B, ControlLedColor.GREEN);
 		}
 	}
 }
