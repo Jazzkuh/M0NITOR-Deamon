@@ -20,6 +20,7 @@ public class AuronProcessor {
         handlers.add(new ButtonHandler());
         handlers.add(new InitialStatesHandler());
         handlers.add(new MeteringHandler());
+        handlers.add(new ModuleActiveHandler());
     }
 
     public void process(String msg, JsonObject param) {

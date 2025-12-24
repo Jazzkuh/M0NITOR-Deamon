@@ -30,14 +30,6 @@ public class FaderHandler extends AuronHandler {
             module.setFaderLevel(level);
 
             ChannelTrigger channelTrigger = new ChannelTrigger(channelId, module.isFaderActive() ? TriggerType.FADER_ON : TriggerType.FADER_OFF);
-            if (module.isActive() && module.isFaderActive()) {
-                TriggerAction triggerAction = ChannelTriggerRegistry.getAction(new ChannelTrigger(channelId, TriggerType.FADER_AND_CHANNEL_ON));
-                if (triggerAction != null) {
-                    triggerAction.process();
-                    System.out.println("Triggered action for channel " + channelId + ": " + triggerAction.getClass().getSimpleName());
-                }
-            }
-
             TriggerAction triggerAction = ChannelTriggerRegistry.getAction(channelTrigger);
             if (triggerAction != null) {
                 triggerAction.process();
