@@ -2,17 +2,15 @@ package com.jazzkuh.m0nitor.modules.web.routes;
 
 import com.google.gson.JsonObject;
 import com.jazzkuh.m0nitor.Deamon;
-import com.jazzkuh.m0nitor.framework.airlite.Fader;
+import com.jazzkuh.m0nitor.framework.auron.Module;
 import com.jazzkuh.m0nitor.framework.web.Route;
-import com.jazzkuh.m0nitor.modules.airlite.AirliteModule;
-import com.jazzkuh.m0nitor.modules.udp.UDPModule;
+import com.jazzkuh.m0nitor.modules.auron.AuronModule;
 import com.jazzkuh.m0nitor.modules.web.WebModule;
 
 import static spark.Spark.get;
 
 public final class PFLChannelRoute {
-    private final AirliteModule airliteModule = Deamon.getModuleManager().get(AirliteModule.class);
-    private final UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);
+    private final AuronModule auronModule = Deamon.getModuleManager().get(AuronModule.class);
 
     public PFLChannelRoute(WebModule webModule) {
         get(Route.PFL_CHANNEL.getPath(), (request, response) -> {
@@ -21,13 +19,15 @@ public final class PFLChannelRoute {
             }
 
             int channel = Integer.parseInt(request.params(":channel"));
-            Fader fader = airliteModule.getFaders().get(channel);
-            if (fader == null) {
+            Module module = auronModule.getModules().get(channel);
+            if (module == null) {
                 response.body(getError("Channel not found").toString());
                 return response.body();
             }
 
-            udpModule.writeToSocket((byte) 0x04, (byte) 0x06, fader.getModule(), (byte) 0x02);
+            JsonObject param = new JsonObject();
+            param.addProperty("module_" + channel, !module.isCue());
+            auronModule.sendToSocket("set_cue", param);
 
             response.body(getSuccess("PFL Channel updated").toString());
             return response.body();

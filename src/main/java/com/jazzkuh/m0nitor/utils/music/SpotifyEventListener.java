@@ -1,11 +1,10 @@
 package com.jazzkuh.m0nitor.utils.music;
 
 import com.jazzkuh.m0nitor.Deamon;
-import com.jazzkuh.m0nitor.framework.airlite.button.ControlButton;
-import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
+import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
+import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
 import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import de.labystudio.spotifyapi.SpotifyListener;
-import de.labystudio.spotifyapi.config.SpotifyConfiguration;
 import de.labystudio.spotifyapi.model.Track;
 import lombok.SneakyThrows;
 

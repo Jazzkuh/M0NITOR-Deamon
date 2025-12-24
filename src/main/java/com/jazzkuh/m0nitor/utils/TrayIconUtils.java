@@ -1,11 +1,11 @@
 package com.jazzkuh.m0nitor.utils;
 
 import com.jazzkuh.m0nitor.Deamon;
-import com.jazzkuh.m0nitor.framework.airlite.button.ButtonTrigger;
-import com.jazzkuh.m0nitor.framework.airlite.button.ControlButton;
-import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
-import com.jazzkuh.m0nitor.framework.airlite.trigger.TriggerAction;
-import com.jazzkuh.m0nitor.modules.airlite.registry.ButtonTriggerRegistry;
+import com.jazzkuh.m0nitor.framework.auron.button.ButtonTrigger;
+import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
+import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
+import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
+import com.jazzkuh.m0nitor.modules.auron.registry.ButtonTriggerRegistry;
 import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;

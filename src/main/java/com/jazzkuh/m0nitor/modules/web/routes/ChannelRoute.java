@@ -2,16 +2,16 @@ package com.jazzkuh.m0nitor.modules.web.routes;
 
 import com.google.gson.JsonObject;
 import com.jazzkuh.m0nitor.Deamon;
-import com.jazzkuh.m0nitor.framework.airlite.Fader;
+import com.jazzkuh.m0nitor.framework.auron.Module;
 import com.jazzkuh.m0nitor.framework.web.Route;
-import com.jazzkuh.m0nitor.modules.airlite.AirliteModule;
+import com.jazzkuh.m0nitor.modules.auron.AuronModule;
 import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import com.jazzkuh.m0nitor.modules.web.WebModule;
 
 import static spark.Spark.get;
 
 public final class ChannelRoute {
-    private final AirliteModule airliteModule = Deamon.getModuleManager().get(AirliteModule.class);
+    private final AuronModule auronModule = Deamon.getModuleManager().get(AuronModule.class);
     private final UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);
 
     public ChannelRoute(WebModule webModule) {
@@ -21,19 +21,17 @@ public final class ChannelRoute {
             }
 
             int channel = Integer.parseInt(request.params(":channel"));
-            Fader fader = airliteModule.getFaders().get(channel);
-            if (fader == null) {
+            Module module = auronModule.getModules().get(channel);
+            if (module == null) {
                 response.body(getError("Channel not found").toString());
                 return response.body();
             }
 
             if (request.params(":state").equalsIgnoreCase("toggle")) {
-                udpModule.writeRemoteOn(fader, !fader.isChannelOn());
                 return "OK";
             }
 
             boolean state = Boolean.parseBoolean(request.params(":state"));
-            udpModule.writeRemoteOn(fader, state);
 
             response.body(getSuccess("Channel state updated").toString());
             return response.body();

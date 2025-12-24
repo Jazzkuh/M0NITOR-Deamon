@@ -1,10 +1,9 @@
 package com.jazzkuh.m0nitor.modules.udp;
 
-import com.jazzkuh.m0nitor.framework.airlite.Fader;
-import com.jazzkuh.m0nitor.framework.airlite.button.ControlButton;
-import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedBlinkSpeed;
-import com.jazzkuh.m0nitor.framework.airlite.button.ControlLedColor;
-import com.jazzkuh.m0nitor.modules.airlite.AirliteModule;
+import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
+import com.jazzkuh.m0nitor.framework.auron.button.ControlLedBlinkSpeed;
+import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
+import com.jazzkuh.m0nitor.modules.auron.AuronModule;
 import com.jazzkuh.m0nitor.modules.udp.generic.GenericListener;
 import com.jazzkuh.m0nitor.modules.udp.metering.MeteringListener;
 import com.jazzkuh.m0nitor.modules.udp.tasks.KeepAliveTask;
@@ -42,7 +41,7 @@ public class UDPModule extends GenericModule {
 
     private WebModule webModule;
 
-    public UDPModule(GenericModuleManager owningManager, WebModule webModule, AirliteModule airliteModule) {
+    public UDPModule(GenericModuleManager owningManager, WebModule webModule, AuronModule auronModule) {
         super(owningManager);
     }
 
@@ -115,7 +114,4 @@ public class UDPModule extends GenericModule {
         this.writeToSocket((byte) 0x04, (byte) 0x03, controlButton.getButtonId(), colorOn.getData(), colorOff.getData(), blinkSpeed.getData());
     }
 
-    public void writeRemoteOn(Fader fader, boolean activate) {
-        this.writeToSocket((byte) 0x04, (byte) 0x05, fader.getModule(), (byte) (activate ? 0x01 : 0x00));
-    }
 }

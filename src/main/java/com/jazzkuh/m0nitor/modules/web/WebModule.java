@@ -2,9 +2,8 @@ package com.jazzkuh.m0nitor.modules.web;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.jazzkuh.m0nitor.framework.airlite.Fader;
-import com.jazzkuh.m0nitor.modules.airlite.AirliteModule;
-import com.jazzkuh.m0nitor.modules.udp.UDPModule;
+import com.jazzkuh.m0nitor.framework.auron.Module;
+import com.jazzkuh.m0nitor.modules.auron.AuronModule;
 import com.jazzkuh.m0nitor.modules.web.server.WebServer;
 import com.jazzkuh.m0nitor.utils.Concurrency;
 import com.jazzkuh.m0nitor.utils.FileUtils;
@@ -26,17 +25,15 @@ public class WebModule extends GenericModule {
     @Getter
     private WebServer webServer;
 
-    private AirliteModule airliteModule;
-    private UDPModule udpModule;
+    private AuronModule auronModule;
 
-    public WebModule(GenericModuleManager owningManager, AirliteModule airliteModule) {
+    public WebModule(GenericModuleManager owningManager, AuronModule auronModule) {
         super(owningManager);
     }
 
     @Override
     public void onEnable() {
-        this.airliteModule = getOwningManager().get(AirliteModule.class);
-        this.udpModule = getOwningManager().get(UDPModule.class);
+        this.auronModule = getOwningManager().get(AuronModule.class);
         this.webServer = new WebServer(this, 8082);
     }
 
@@ -50,24 +47,26 @@ public class WebModule extends GenericModule {
         jsonObject.addProperty("success", true);
 
         JsonArray faders = new JsonArray();
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 1; i <= 10; i++) {
             JsonObject faderObject = new JsonObject();
-            Fader fader = airliteModule.getFaders().get(i);
-            faderObject.addProperty("channel_id", fader.getChannelId());
-            faderObject.addProperty("fader_active", fader.isFaderActive());
-            faderObject.addProperty("channel_on", fader.isChannelOn());
-            faderObject.addProperty("cue_active", fader.isCueActive());
+            Module module = auronModule.getModules().get(i);
+            faderObject.addProperty("name", module.getName());
+            faderObject.addProperty("channel_id", module.getChannelId());
+            faderObject.addProperty("fader_active", module.isFaderActive());
+            faderObject.addProperty("channel_on", module.isActive());
+            faderObject.addProperty("cue_active", module.isCue());
             faders.add(faderObject);
         }
         jsonObject.add("faders", faders);
 
         JsonObject meteringValues = new JsonObject();
-        for (String key : udpModule.getMeteringValues().keySet()) {
-            double value = udpModule.getMeteringValues().get(key);
-            meteringValues.addProperty(key, value > 55 ? 55 : value);
+        for (String key : auronModule.getMeteringValues().keySet()) {
+            double value = auronModule.getMeteringValues().get(key);
+            value += 50;
+            meteringValues.addProperty(key, value > 2 ? value - 3 : value);
         }
 
-        if (udpModule.getMeteringValues().isEmpty()) {
+        if (auronModule.getMeteringValues().isEmpty()) {
             meteringValues.addProperty("program_left", 0);
             meteringValues.addProperty("program_right", 0);
             meteringValues.addProperty("phones_left", 0);
@@ -77,25 +76,25 @@ public class WebModule extends GenericModule {
         }
         jsonObject.add("metering", meteringValues);
 
-        jsonObject.addProperty("microphone_on", airliteModule.getMicrophoneOn() != -1);
+        jsonObject.addProperty("microphone_on", auronModule.getMicrophoneOn() != -1);
 
         SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("HH:mm:ss");
         jsonObject.addProperty("time", dateFormat.format(new Date()));
 
         dateFormat.setTimeZone(TimeZone.getTimeZone("Etc/GMT+0"));
-        jsonObject.addProperty("microphone_on_since", airliteModule.getMicrophoneOn());
+        jsonObject.addProperty("microphone_on_since", auronModule.getMicrophoneOn());
 
-        Date elapsed = new Date(System.currentTimeMillis() - airliteModule.getMicrophoneOn());
+        Date elapsed = new Date(System.currentTimeMillis() - auronModule.getMicrophoneOn());
         jsonObject.addProperty("microphone_on_time", dateFormat.format(elapsed));
 
-        jsonObject.addProperty("on_air", airliteModule.getFaders().values().stream().anyMatch(faderStatus -> faderStatus.isChannelOn() && faderStatus.isFaderActive()));
-        jsonObject.addProperty("cue_enabled", airliteModule.getFaders().values().stream().anyMatch(Fader::isCueActive) || airliteModule.isCueAux());
-        jsonObject.addProperty("auto_cue_crm", airliteModule.isAutoCueCrm());
-        jsonObject.addProperty("auto_cue_announcer", airliteModule.isAutoCueAnnouncer());
-        jsonObject.addProperty("cue_aux", airliteModule.isCueAux());
-        jsonObject.addProperty("cue_air", airliteModule.isCueAir());
+        jsonObject.addProperty("on_air", auronModule.getModules().values().stream().anyMatch(Module::isActive));
+        jsonObject.addProperty("auto_cue_crm", auronModule.isAutoCueCrm());
+        jsonObject.addProperty("auto_cue_announcer", auronModule.isAutoCueAnnouncer());
+        jsonObject.addProperty("cue_enabled", auronModule.isCueAux());
+        jsonObject.addProperty("cue_aux", auronModule.isCueAux());
+        jsonObject.addProperty("cue_air", auronModule.isCueAir());
 
-        jsonObject.add("spotify", airliteModule.getSpotifyJson());
+        jsonObject.add("spotify", auronModule.getSpotifyJson());
         return jsonObject;
     }
 
