@@ -62,8 +62,7 @@ public class WebModule extends GenericModule {
         JsonObject meteringValues = new JsonObject();
         for (String key : auronModule.getMeteringValues().keySet()) {
             double value = auronModule.getMeteringValues().get(key);
-            value += 50;
-            meteringValues.addProperty(key, value > 2 ? value - 3 : value);
+            meteringValues.addProperty(key, value);
         }
 
         if (auronModule.getMeteringValues().isEmpty()) {
@@ -73,6 +72,16 @@ public class WebModule extends GenericModule {
             meteringValues.addProperty("phones_right", 0);
             meteringValues.addProperty("crm_left", 0);
             meteringValues.addProperty("crm_right", 0);
+            meteringValues.addProperty("aux_left", 0);
+            meteringValues.addProperty("aux_right", 0);
+            meteringValues.addProperty("master_left", 0);
+            meteringValues.addProperty("master_right", 0);
+            meteringValues.addProperty("sub_left", 0);
+            meteringValues.addProperty("sub_right", 0);
+            meteringValues.addProperty("studio_left", 0);
+            meteringValues.addProperty("studio_right", 0);
+            meteringValues.addProperty("vt_left", 0);
+            meteringValues.addProperty("vt_right", 0);
         }
         jsonObject.add("metering", meteringValues);
 
