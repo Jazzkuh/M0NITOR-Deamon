@@ -3,13 +3,11 @@ package com.jazzkuh.m0nitor.utils.music;
 import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
-import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import de.labystudio.spotifyapi.SpotifyListener;
 import de.labystudio.spotifyapi.model.Track;
 import lombok.SneakyThrows;
 
 public class SpotifyEventListener implements SpotifyListener {
-    private final UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);
     private final MusicEngine musicEngine;
 
     public SpotifyEventListener(MusicEngine musicEngine) {
@@ -32,11 +30,11 @@ public class SpotifyEventListener implements SpotifyListener {
 
     @Override
     public void onPlayBackChanged(boolean isPlaying) {
-        if (isPlaying) {
-            udpModule.writeStaticLed(ControlButton.LED_1A, ControlLedColor.GREEN);
-        } else {
-            udpModule.writeStaticLed(ControlButton.LED_1A, ControlLedColor.RED);
-        }
+//        if (isPlaying) {
+//            udpModule.writeStaticLed(ControlButton.LED_1A, ControlLedColor.GREEN);
+//        } else {
+//            udpModule.writeStaticLed(ControlButton.LED_1A, ControlLedColor.RED);
+//        }
     }
 
     @Override

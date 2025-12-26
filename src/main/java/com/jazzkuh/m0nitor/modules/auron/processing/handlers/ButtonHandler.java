@@ -1,19 +1,16 @@
 package com.jazzkuh.m0nitor.modules.auron.processing.handlers;
 
 import com.google.gson.JsonObject;
-import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.auron.button.ButtonTrigger;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerType;
 import com.jazzkuh.m0nitor.framework.auron.AuronHandler;
 import com.jazzkuh.m0nitor.modules.auron.registry.ButtonTriggerRegistry;
-import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 
 import java.util.Map;
 
 public class ButtonHandler extends AuronHandler {
-    private final UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);
 
     @Override
     public boolean shouldProcess(String msg) {

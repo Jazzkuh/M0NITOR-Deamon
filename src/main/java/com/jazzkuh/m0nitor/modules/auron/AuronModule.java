@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Getter
 @Setter
@@ -68,6 +71,13 @@ public class AuronModule extends GenericModule {
         this.auronSocket.connect();
 
         registerComponent(new FlashingTask(this));
+
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(() -> {
+            if (this.auronSocket != null && this.auronSocket.isOpen()) {
+                this.auronSocket.send("{\"msg\":\"ping\"}");
+            }
+        }, 0, 15, TimeUnit.SECONDS);
     }
 
     @Override

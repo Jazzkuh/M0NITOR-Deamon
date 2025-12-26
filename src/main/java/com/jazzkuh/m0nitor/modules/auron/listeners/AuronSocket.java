@@ -20,6 +20,7 @@ public class AuronSocket extends WebSocketClient {
         super(URI.create("ws://192.168.1.47/AURON"));
         this.auronModule = auronModule;
         this.webModule = webModule;
+        setConnectionLostTimeout(30);
     }
 
     @Override
@@ -43,6 +44,7 @@ public class AuronSocket extends WebSocketClient {
         paramArray.add("metering:module_7");
         paramArray.add("metering:module_8");
         paramArray.add("metering:module_9");
+        paramArray.add("metering:module_10");
         paramArray.add("metering:module_10");
 
         auronModule.sendToSocket("subscribe", paramArray);

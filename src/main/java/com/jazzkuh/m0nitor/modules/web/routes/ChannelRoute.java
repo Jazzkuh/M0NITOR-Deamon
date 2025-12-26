@@ -5,14 +5,12 @@ import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.auron.Module;
 import com.jazzkuh.m0nitor.framework.web.Route;
 import com.jazzkuh.m0nitor.modules.auron.AuronModule;
-import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import com.jazzkuh.m0nitor.modules.web.WebModule;
 
 import static spark.Spark.get;
 
 public final class ChannelRoute {
     private final AuronModule auronModule = Deamon.getModuleManager().get(AuronModule.class);
-    private final UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);
 
     public ChannelRoute(WebModule webModule) {
         get(Route.CHANNEL_STATE.getPath(), (request, response) -> {
@@ -28,10 +26,17 @@ public final class ChannelRoute {
             }
 
             if (request.params(":state").equalsIgnoreCase("toggle")) {
+                boolean state = module.isActive();
+                JsonObject param = new JsonObject();
+                param.addProperty("module_" + channel, !state);
+                auronModule.sendToSocket("set_on", param);
                 return "OK";
             }
 
             boolean state = Boolean.parseBoolean(request.params(":state"));
+            JsonObject param = new JsonObject();
+            param.addProperty("module_" + channel, state);
+            auronModule.sendToSocket("set_on", param);
 
             response.body(getSuccess("Channel state updated").toString());
             return response.body();

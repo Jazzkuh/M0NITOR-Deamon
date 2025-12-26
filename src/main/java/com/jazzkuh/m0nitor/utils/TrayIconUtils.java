@@ -6,7 +6,6 @@ import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.modules.auron.registry.ButtonTriggerRegistry;
-import com.jazzkuh.m0nitor.modules.udp.UDPModule;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
@@ -23,15 +22,12 @@ public class TrayIconUtils {
 
         MenuItem repairItem = new MenuItem("Repair");
         repairItem.addActionListener(actionEvent -> {
-            UDPModule udpModule = Deamon.getModuleManager().get(UDPModule.class);
-            if (udpModule == null) return;
-
             Deamon.getInstance().getMusicEngine().initializeSpotifyAPI();
 
-            udpModule.writeStaticLed(ControlButton.ALL_LEDS, ControlLedColor.OFF);
+//            udpModule.writeStaticLed(ControlButton.ALL_LEDS, ControlLedColor.OFF);
             for (ButtonTrigger buttonTrigger : ButtonTriggerRegistry.getTriggers().keySet()) {
                 ControlButton controlButton = buttonTrigger.getControlButton();
-                udpModule.writeStaticLed(controlButton, ControlLedColor.GREEN);
+//                udpModule.writeStaticLed(controlButton, ControlLedColor.GREEN);
 
                 TriggerAction triggerAction = ButtonTriggerRegistry.getAction(buttonTrigger);
                 if (triggerAction == null) continue;
