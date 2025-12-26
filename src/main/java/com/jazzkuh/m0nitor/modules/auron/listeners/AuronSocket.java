@@ -56,8 +56,9 @@ public class AuronSocket extends WebSocketClient {
     }
 
     @Override
-    public void onClose(int i, String s, boolean b) {
-
+    public void onClose(int code, String reason, boolean remote) {
+        System.out.println("Disconnected, reconnecting...");
+        reconnect();
     }
 
     @Override
