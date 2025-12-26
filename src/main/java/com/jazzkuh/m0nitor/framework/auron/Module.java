@@ -19,6 +19,12 @@ public class Module {
     @Setter
     private boolean cue;
 
+    @Setter
+    private double left;
+
+    @Setter
+    private double right;
+
     public Module(int channelId, boolean active, int faderLevel, boolean cue) {
         this.channelId = channelId;
         this.active = active;

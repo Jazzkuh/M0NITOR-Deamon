@@ -55,6 +55,9 @@ public class WebModule extends GenericModule {
             faderObject.addProperty("fader_active", module.isFaderActive());
             faderObject.addProperty("channel_on", module.isActive());
             faderObject.addProperty("cue_active", module.isCue());
+            faderObject.addProperty("fader_level", module.getFaderLevel());
+            faderObject.addProperty("left", module.getLeft());
+            faderObject.addProperty("right", module.getRight());
             faders.add(faderObject);
         }
         jsonObject.add("faders", faders);
