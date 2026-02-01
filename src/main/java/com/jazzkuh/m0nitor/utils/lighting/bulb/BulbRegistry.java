@@ -11,7 +11,7 @@ public class BulbRegistry {
 	private static final List<Bulb> bulbs = new ArrayList<>();
 
 	static {
-		bulbs.add(new Bulb("studio_led_strip2", "192.168.2.47"));
+		bulbs.add(new Bulb("studio_led", "192.168.1.48"));
 	}
 
 	public static List<Bulb> getAllBulbs() {

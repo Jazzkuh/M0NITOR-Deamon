@@ -8,6 +8,9 @@ import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
 import com.jazzkuh.m0nitor.modules.auron.listeners.AuronSocket;
 import com.jazzkuh.m0nitor.modules.auron.tasks.FlashingTask;
 import com.jazzkuh.m0nitor.modules.web.WebModule;
+import com.jazzkuh.m0nitor.utils.lighting.PhilipsWizLightController;
+import com.jazzkuh.m0nitor.utils.lighting.bulb.Bulb;
+import com.jazzkuh.m0nitor.utils.lighting.bulb.BulbRegistry;
 import com.jazzkuh.modulemanager.generic.GenericModule;
 import com.jazzkuh.modulemanager.generic.GenericModuleManager;
 import de.labystudio.spotifyapi.SpotifyAPI;
@@ -15,6 +18,7 @@ import de.labystudio.spotifyapi.model.Track;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,6 +75,12 @@ public class AuronModule extends GenericModule {
         this.auronSocket.connect();
 
         registerComponent(new FlashingTask(this));
+
+        Bulb ledBulb = BulbRegistry.getBulbByName("studio_led");
+        if (ledBulb != null) {
+            PhilipsWizLightController.setRGBColor(ledBulb, Color.RED, 100);
+            PhilipsWizLightController.setState(ledBulb, false);
+        }
 
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> {

@@ -5,8 +5,6 @@ import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerType;
 import com.jazzkuh.m0nitor.modules.auron.trigger.fader.OnAirLightTrigger;
 import com.jazzkuh.m0nitor.modules.auron.trigger.fader.RegularLightTrigger;
-import com.jazzkuh.m0nitor.modules.auron.trigger.fader.music.CueOffTrigger;
-import com.jazzkuh.m0nitor.modules.auron.trigger.fader.music.CueOnTrigger;
 import com.jazzkuh.m0nitor.modules.auron.trigger.fader.music.MusicPauseTrigger;
 import com.jazzkuh.m0nitor.modules.auron.trigger.fader.music.MusicSkipStartTrigger;
 
@@ -22,8 +20,6 @@ public class ChannelTriggerRegistry {
 		registerAction(new ChannelTrigger(TriggerType.MICROPHONE_OFF), RegularLightTrigger.class);
 		registerAction(new ChannelTrigger(spotifyChannel, TriggerType.MODULE_ACTIVE), MusicSkipStartTrigger.class);
 		registerAction(new ChannelTrigger(spotifyChannel, TriggerType.MODULE_INACTIVE), MusicPauseTrigger.class);
-		registerAction(new ChannelTrigger(spotifyChannel, TriggerType.FADER_OFF_CUE_ON), CueOnTrigger.class);
-		registerAction(new ChannelTrigger(spotifyChannel, TriggerType.FADER_OFF_CUE_OFF), CueOffTrigger.class);
 	}
 
 	public static void registerAction(ChannelTrigger channelTrigger, Class<? extends TriggerAction> triggerClass) {

@@ -31,7 +31,8 @@ public class CueHandler extends AuronHandler {
 
             System.out.println("Fader: " + channelId + ", Cue on: " + active);
 
-            TriggerType triggerType = active ? TriggerType.CUE_ON : TriggerType.CUE_OFF;
+            boolean faderActive = module.isFaderActive();
+            TriggerType triggerType = active ? (faderActive ? TriggerType.CUE_ON : TriggerType.FADER_OFF_CUE_ON) : (faderActive ? TriggerType.CUE_OFF : TriggerType.FADER_OFF_CUE_OFF);
             ChannelTrigger channelTrigger = new ChannelTrigger(channelId, triggerType);
 
             TriggerAction triggerAction = ChannelTriggerRegistry.getAction(channelTrigger);
