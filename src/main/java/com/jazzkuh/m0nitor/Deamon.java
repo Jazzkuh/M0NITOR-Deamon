@@ -1,6 +1,13 @@
 package com.jazzkuh.m0nitor;
 
 import ch.qos.logback.classic.Level;
+import com.jazzkuh.m0nitor.framework.auron.button.ButtonTrigger;
+import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
+import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
+import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
+import com.jazzkuh.m0nitor.modules.auron.AuronModule;
+import com.jazzkuh.m0nitor.modules.auron.registry.ButtonTriggerRegistry;
+import com.jazzkuh.m0nitor.utils.EmberLedUtil;
 import com.jazzkuh.m0nitor.utils.TrayIconUtils;
 import com.jazzkuh.m0nitor.utils.hue.HueController;
 import com.jazzkuh.m0nitor.utils.music.MusicEngine;
@@ -41,7 +48,6 @@ public final class Deamon {
 
         URL imageUrl = this.getClass().getClassLoader().getResource("app.png");
         Image image = Toolkit.getDefaultToolkit().createImage(imageUrl);
-        TrayIconUtils.create(image);
         this.hueController = new HueController();
 
         setModuleManager(new GenericModuleManager(logger));
@@ -54,6 +60,7 @@ public final class Deamon {
         this.musicEngine.getSpotifyAPI().registerListener(new SpotifyEventListener(this.musicEngine));
 
         moduleManager.enable();
+        TrayIconUtils.create(image);
     }
 
     public void onShutdown() {

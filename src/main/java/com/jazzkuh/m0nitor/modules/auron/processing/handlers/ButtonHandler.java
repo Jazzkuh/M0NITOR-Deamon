@@ -1,16 +1,21 @@
 package com.jazzkuh.m0nitor.modules.auron.processing.handlers;
 
 import com.google.gson.JsonObject;
+import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.auron.button.ButtonTrigger;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
+import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerType;
 import com.jazzkuh.m0nitor.framework.auron.AuronHandler;
+import com.jazzkuh.m0nitor.modules.auron.AuronModule;
 import com.jazzkuh.m0nitor.modules.auron.registry.ButtonTriggerRegistry;
+import com.jazzkuh.m0nitor.utils.EmberLedUtil;
 
 import java.util.Map;
 
 public class ButtonHandler extends AuronHandler {
+    private AuronModule auronModule = Deamon.getModuleManager().get(AuronModule.class);
 
     @Override
     public boolean shouldProcess(String msg) {
@@ -25,6 +30,14 @@ public class ButtonHandler extends AuronHandler {
             if (!key.startsWith("a_") && !key.startsWith("b_")) continue;
             ControlButton controlButton = ControlButton.valueOf("LED_" + Integer.parseInt(key.split("_")[1]) + (key.startsWith("a_") ? "A" : "B"));
             boolean pressed = entry.getValue().getAsBoolean();
+
+            if (controlButton.isHasPressedColor()) {
+                if (pressed) {
+                    EmberLedUtil.writeStaticLed(auronModule, controlButton, ControlLedColor.RED);
+                } else {
+                    EmberLedUtil.writeStaticLed(auronModule, controlButton, controlButton.getDefaultLedColor());
+                }
+            }
 
             System.out.println("Button: " + key + ", Pressed: " + pressed + ", Mapped Key: " + controlButton);
 

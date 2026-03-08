@@ -3,6 +3,8 @@ package com.jazzkuh.m0nitor.utils.music;
 import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
+import com.jazzkuh.m0nitor.modules.auron.AuronModule;
+import com.jazzkuh.m0nitor.utils.EmberLedUtil;
 import de.labystudio.spotifyapi.SpotifyListener;
 import de.labystudio.spotifyapi.model.Track;
 import lombok.SneakyThrows;
@@ -30,11 +32,12 @@ public class SpotifyEventListener implements SpotifyListener {
 
     @Override
     public void onPlayBackChanged(boolean isPlaying) {
-//        if (isPlaying) {
-//            udpModule.writeStaticLed(ControlButton.LED_1A, ControlLedColor.GREEN);
-//        } else {
-//            udpModule.writeStaticLed(ControlButton.LED_1A, ControlLedColor.RED);
-//        }
+        AuronModule auronModule = Deamon.getModuleManager().get(AuronModule.class);
+        if (isPlaying) {
+            EmberLedUtil.writeStaticLed(auronModule, ControlButton.LED_1A, ControlLedColor.GREEN);
+        } else {
+            EmberLedUtil.writeStaticLed(auronModule, ControlButton.LED_1A, ControlLedColor.RED);
+        }
     }
 
     @Override

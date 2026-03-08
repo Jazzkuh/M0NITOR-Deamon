@@ -8,54 +8,96 @@ import javax.annotation.Nullable;
 @Getter
 @ToString
 public enum ControlButton {
-    LED_1A((byte) 0x00, "A", 1, -45, false),
-    LED_2A((byte) 0x01, "A", 2, -40),
-    LED_3A((byte) 0x02, "A", 4, -35),
-    LED_4A((byte) 0x03, "A", 8, -30),
-    LED_5A((byte) 0x04, "A", 16, -25),
-    LED_6A((byte) 0x05, "A", 32, -20),
-    LED_7A((byte) 0x06, "A", 64, -15, false),
-    LED_8A((byte) 0x07, "A", -128, -10, false),
-    LED_1B((byte) 0x08, "B", 1, -5, false),
-    LED_2B((byte) 0x09, "B", 2, 0, false),
-    LED_3B((byte) 0x0A, "B", 4, 5, false),
-    LED_4B((byte) 0x0B, "B", 8, 10, false),
-    LED_5B((byte) 0x0C, "B", 16, 15, false),
-    LED_6B((byte) 0x0D, "B", 32, 20, false),
-    LED_7B((byte) 0x0E, "B", 64, 25, false),
-    LED_8B((byte) 0x0F, "B", -128, 30, false),
-    ALL_LEDS((byte) 0xFF, "ALL", 0, 0);
+    LED_1A("A", "a_1", 0, ControlLedColor.GREEN, false),
+    LED_2A("A", "a_2", 1, ControlLedColor.GREEN),
+    LED_3A("A", "a_3", 2, ControlLedColor.GREEN),
+    LED_4A("A", "a_4", 3, ControlLedColor.GREEN, false),
+    LED_5A("A", "a_5", 4, ControlLedColor.GREEN, false),
+    LED_6A("A", "a_6", 5, ControlLedColor.GREEN, false),
+    LED_7A("A", "a_7", 6, ControlLedColor.GREEN, false),
+    LED_8A("A", "a_8", 7, ControlLedColor.GREEN, false),
+    LED_1B("B", "b_1", 8, ControlLedColor.YELLOW, false),
+    LED_2B("B", "b_2", 9, ControlLedColor.YELLOW, false),
+    LED_3B("B", "b_3", 10, ControlLedColor.YELLOW, false),
+    LED_4B("B", "b_4", 11, ControlLedColor.YELLOW, false),
+    LED_5B("B", "b_5", 12, ControlLedColor.YELLOW, false),
+    LED_6B("B", "b_6", 13, ControlLedColor.YELLOW, false),
+    LED_7B("B", "b_7", 14, ControlLedColor.GREEN, false),
+    LED_8B("B", "b_8", 15, ControlLedColor.GREEN, false);
 
-    private final byte buttonId;
+    private static final String EMBER_BASE_PATH = "0.2.4";
+
     private final String row;
-    private final int pressedValue;
-    private final int buttonValue;
+    private final String switchKey;
+    private final int emberIndex;
+    private final ControlLedColor defaultLedColor;
     private final boolean hasPressedColor;
 
-    ControlButton(byte buttonId, String row, int pressedValue, int buttonValue) {
-        this.buttonId = buttonId;
+    ControlButton(String row, String switchKey, int emberIndex, ControlLedColor defaultLedColor) {
         this.row = row;
-        this.pressedValue = pressedValue;
-        this.buttonValue = buttonValue;
+        this.switchKey = switchKey;
+        this.emberIndex = emberIndex;
+        this.defaultLedColor = defaultLedColor;
         this.hasPressedColor = true;
     }
 
-    ControlButton(byte buttonId, String row, int pressedValue, int buttonValue, boolean hasPressedColor) {
-        this.buttonId = buttonId;
+    ControlButton(String row, String switchKey, int emberIndex, ControlLedColor defaultLedColor, boolean hasPressedColor) {
         this.row = row;
-        this.pressedValue = pressedValue;
-        this.buttonValue = buttonValue;
+        this.switchKey = switchKey;
+        this.emberIndex = emberIndex;
+        this.defaultLedColor = defaultLedColor;
         this.hasPressedColor = hasPressedColor;
     }
 
+    /**
+     * Ember+ path to the State parameter (boolean).
+     * e.g. "0.2.4.0.0" for LED_1A
+     */
+    public String getEmberStatePath() {
+        return EMBER_BASE_PATH + "." + emberIndex + ".0";
+    }
+
+    /**
+     * Ember+ path to the Blink mode parameter (enum 0-3).
+     * e.g. "0.2.4.0.1" for LED_1A
+     */
+    public String getEmberBlinkModePath() {
+        return EMBER_BASE_PATH + "." + emberIndex + ".1";
+    }
+
+    /**
+     * Ember+ path to the On color parameter (enum 0-3).
+     * e.g. "0.2.4.0.2" for LED_1A
+     */
+    public String getEmberOnColorPath() {
+        return EMBER_BASE_PATH + "." + emberIndex + ".2";
+    }
+
+    /**
+     * Ember+ path to the Off color parameter (enum 0-3).
+     * e.g. "0.2.4.0.3" for LED_1A
+     */
+    public String getEmberOffColorPath() {
+        return EMBER_BASE_PATH + "." + emberIndex + ".3";
+    }
+
     @Nullable
-    public static ControlButton getButton(int buttonValue) {
-        for (ControlButton controlButton : ControlButton.values()) {
-            if (controlButton.getButtonValue() == buttonValue) {
-                return controlButton;
+    public static ControlButton getByKey(String switchKey) {
+        for (ControlButton button : values()) {
+            if (button.getSwitchKey().equals(switchKey)) {
+                return button;
             }
         }
+        return null;
+    }
 
+    @Nullable
+    public static ControlButton getByEmberIndex(int index) {
+        for (ControlButton button : values()) {
+            if (button.getEmberIndex() == index) {
+                return button;
+            }
+        }
         return null;
     }
 }

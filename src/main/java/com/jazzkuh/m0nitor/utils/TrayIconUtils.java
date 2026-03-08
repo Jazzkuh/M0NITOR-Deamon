@@ -5,6 +5,7 @@ import com.jazzkuh.m0nitor.framework.auron.button.ButtonTrigger;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
+import com.jazzkuh.m0nitor.modules.auron.AuronModule;
 import com.jazzkuh.m0nitor.modules.auron.registry.ButtonTriggerRegistry;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -13,6 +14,8 @@ import java.awt.*;
 
 @UtilityClass
 public class TrayIconUtils {
+    private final AuronModule auronModule = Deamon.getModuleManager().get(AuronModule.class);
+
     @SneakyThrows
     public static void create(Image image) {
         if (!SystemTray.isSupported()) return;
@@ -24,10 +27,10 @@ public class TrayIconUtils {
         repairItem.addActionListener(actionEvent -> {
             Deamon.getInstance().getMusicEngine().initializeSpotifyAPI();
 
-//            udpModule.writeStaticLed(ControlButton.ALL_LEDS, ControlLedColor.OFF);
+            EmberLedUtil.writeAll(auronModule, ControlLedColor.OFF);
             for (ButtonTrigger buttonTrigger : ButtonTriggerRegistry.getTriggers().keySet()) {
                 ControlButton controlButton = buttonTrigger.getControlButton();
-//                udpModule.writeStaticLed(controlButton, ControlLedColor.GREEN);
+                EmberLedUtil.writeStaticLed(auronModule, controlButton, controlButton.getDefaultLedColor());
 
                 TriggerAction triggerAction = ButtonTriggerRegistry.getAction(buttonTrigger);
                 if (triggerAction == null) continue;

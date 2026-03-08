@@ -4,6 +4,7 @@ import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlLedBlinkSpeed;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
+import com.jazzkuh.m0nitor.utils.EmberLedUtil;
 import lombok.SneakyThrows;
 
 public class FaderSkipToggleTrigger extends TriggerAction {
@@ -11,20 +12,20 @@ public class FaderSkipToggleTrigger extends TriggerAction {
 	@SneakyThrows
 	public void process() {
 		if (!auronModule.getEnabledButtons().contains("fader_skip")) {
-//			udpModule.writeBlinkingLed(ControlButton.LED_8A, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+			EmberLedUtil.writeBlinkingLed(auronModule, ControlButton.LED_8A, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
 			auronModule.getEnabledButtons().add("fader_skip");
 		} else {
-//			udpModule.writeStaticLed(ControlButton.LED_8A, ControlLedColor.GREEN);
+			EmberLedUtil.writeStaticLed(auronModule, ControlButton.LED_8A, ControlLedColor.GREEN);
 			auronModule.getEnabledButtons().remove("fader_skip");
 		}
 	}
 
 	@Override
 	public void startActions() {
-//		if (!airliteModule.getEnabledButtons().contains("fader_skip")) {
-//			udpModule.writeStaticLed(ControlButton.LED_8A, ControlLedColor.GREEN);
-//		} else {
-//			udpModule.writeBlinkingLed(ControlButton.LED_8A, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
-//		}
+		if (!auronModule.getEnabledButtons().contains("fader_skip")) {
+			EmberLedUtil.writeStaticLed(auronModule, ControlButton.LED_8A, ControlLedColor.GREEN);
+		} else {
+			EmberLedUtil.writeBlinkingLed(auronModule, ControlButton.LED_8A, ControlLedColor.RED, ControlLedColor.OFF, ControlLedBlinkSpeed.SLOW);
+		}
 	}
 }
