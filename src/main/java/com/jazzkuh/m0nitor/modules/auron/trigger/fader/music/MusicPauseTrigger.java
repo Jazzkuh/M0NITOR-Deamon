@@ -4,6 +4,7 @@ import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
+import com.jazzkuh.m0nitor.modules.omniplayer.trigger.GpiFourTrigger;
 import com.jazzkuh.m0nitor.utils.EmberLedUtil;
 import com.jazzkuh.m0nitor.utils.music.MusicEngine;
 import de.labystudio.spotifyapi.model.MediaKey;
@@ -13,7 +14,10 @@ public class MusicPauseTrigger extends TriggerAction {
 	@Override
 	@SneakyThrows
 	public void process() {
-		if (auronModule.getEnabledButtons().contains("disable_spotify_fader")) return;
+		if (auronModule.getEnabledButtons().contains("disable_spotify_fader")) {
+            new GpiFourTrigger().process();
+            return;
+        }
 
 		MusicEngine musicEngine = Deamon.getInstance().getMusicEngine();
 		if (musicEngine.isPlaying()) {
