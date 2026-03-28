@@ -20,7 +20,7 @@ public class BrightLightsTrigger extends TriggerAction {
 		for (ControlButton button : Deamon.getModuleManager().get(AuronModule.class).getHueButtons()) {
 			// Reset all other buttons
             if (button != ControlButton.LED_7B) {
-                EmberLedUtil.writeStaticLed(auronModule, button, ControlLedColor.GREEN);
+                EmberLedUtil.writeStaticLed(auronModule, button, ControlLedColor.YELLOW);
             }
 		}
 

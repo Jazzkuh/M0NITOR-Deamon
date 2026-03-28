@@ -18,17 +18,9 @@ public class HueLightsTrigger extends TriggerAction {
 
         Group room = hueController.getRoomByName("Studio");
 		if (room.isAnyOn()) {
-            for (ControlButton button : Deamon.getModuleManager().get(AuronModule.class).getHueButtons()) {
-                EmberLedUtil.writeStaticLed(auronModule, button, ControlLedColor.RED);
-            }
-
 			EmberLedUtil.writeStaticLed(auronModule, ControlButton.LED_8B, ControlLedColor.RED);
 			room.turnOff();
 		} else {
-            for (ControlButton button : Deamon.getModuleManager().get(AuronModule.class).getHueButtons()) {
-                EmberLedUtil.writeStaticLed(auronModule, button, ControlLedColor.GREEN);
-            }
-
             EmberLedUtil.writeStaticLed(auronModule, ControlButton.LED_8B, ControlLedColor.GREEN);
             room.turnOn();
 		}

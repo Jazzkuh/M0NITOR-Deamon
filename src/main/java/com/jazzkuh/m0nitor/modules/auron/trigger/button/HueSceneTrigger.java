@@ -2,7 +2,6 @@ package com.jazzkuh.m0nitor.modules.auron.trigger.button;
 
 import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
-import com.jazzkuh.m0nitor.framework.auron.button.ControlLedBlinkSpeed;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.modules.auron.AuronModule;
