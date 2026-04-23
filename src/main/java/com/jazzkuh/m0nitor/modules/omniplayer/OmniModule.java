@@ -57,6 +57,9 @@ public class OmniModule extends GenericModule {
 
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(7, TriggerType.MODULE_ACTIVE), GpiSevenTrigger.class);
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(7, TriggerType.MODULE_INACTIVE), GpiEightTrigger.class);
+
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(8, TriggerType.MODULE_ACTIVE), GpiNineTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(8, TriggerType.MODULE_INACTIVE), GpiTenTrigger.class);
     }
 
     @Override
@@ -71,6 +74,6 @@ public class OmniModule extends GenericModule {
 
     @Override
     public void onDisable() {
+        gpioModule.disconnect();
     }
-
 }

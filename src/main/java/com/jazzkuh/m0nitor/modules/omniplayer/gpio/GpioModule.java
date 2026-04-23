@@ -80,7 +80,6 @@ public class GpioModule {
 
     /**
      * Sends a raw TCP GPIO command to the plugin.
-     * Called internally by {@link GpiUtil}; prefer using GpiUtil over calling this directly.
      */
     public void sendToPlugin(String command) {
         PrintWriter w = writer;
