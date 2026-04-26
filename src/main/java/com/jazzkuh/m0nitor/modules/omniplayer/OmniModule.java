@@ -51,6 +51,10 @@ public class OmniModule extends GenericModule {
     public void onLoad() {
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.MODULE_ACTIVE), GpiOneTrigger.class);
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.MODULE_INACTIVE), GpiTwoTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_ON), GpiElevenTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_ON), GpiElevenTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_ON), GpiTwelveTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_OFF), GpiTwelveTrigger.class);
 
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(6, TriggerType.MODULE_ACTIVE), GpiFiveTrigger.class);
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(6, TriggerType.MODULE_INACTIVE), GpiSixTrigger.class);
@@ -60,6 +64,11 @@ public class OmniModule extends GenericModule {
 
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(8, TriggerType.MODULE_ACTIVE), GpiNineTrigger.class);
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(8, TriggerType.MODULE_INACTIVE), GpiTenTrigger.class);
+
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.CUE_ON), GpiThriteenTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.FADER_OFF_CUE_ON), GpiThriteenTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.FADER_OFF_CUE_OFF), GpiFourteenTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.CUE_OFF), GpiFourteenTrigger.class);
     }
 
     @Override
