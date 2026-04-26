@@ -53,7 +53,7 @@ public class OmniModule extends GenericModule {
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.MODULE_INACTIVE), GpiTwoTrigger.class);
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_ON), GpiElevenTrigger.class);
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_ON), GpiElevenTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_ON), GpiTwelveTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_OFF), GpiTwelveTrigger.class);
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_OFF), GpiTwelveTrigger.class);
 
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(6, TriggerType.MODULE_ACTIVE), GpiFiveTrigger.class);
