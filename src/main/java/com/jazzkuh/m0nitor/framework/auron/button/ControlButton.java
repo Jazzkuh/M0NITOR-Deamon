@@ -80,24 +80,4 @@ public enum ControlButton {
     public String getEmberOffColorPath() {
         return EMBER_BASE_PATH + "." + emberIndex + ".3";
     }
-
-    @Nullable
-    public static ControlButton getByKey(String switchKey) {
-        for (ControlButton button : values()) {
-            if (button.getSwitchKey().equals(switchKey)) {
-                return button;
-            }
-        }
-        return null;
-    }
-
-    @Nullable
-    public static ControlButton getByEmberIndex(int index) {
-        for (ControlButton button : values()) {
-            if (button.getEmberIndex() == index) {
-                return button;
-            }
-        }
-        return null;
-    }
 }

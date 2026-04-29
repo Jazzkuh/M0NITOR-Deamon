@@ -183,7 +183,7 @@
         <dependency>
             <groupId>com.github.LabyStudio</groupId>
             <artifactId>java-spotify-api</artifactId>
-            <version>1.4.5</version>
+            <version>1.5.1</version>
             <scope>compile</scope>
         </dependency>
 

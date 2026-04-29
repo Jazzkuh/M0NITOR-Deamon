@@ -25,12 +25,20 @@ public class Module {
     @Setter
     private double right;
 
+    @Setter
+    private boolean pgm;
+
+    @Setter
+    private boolean sub;
+
     public Module(int channelId, boolean active, int faderLevel, boolean cue) {
         this.channelId = channelId;
         this.active = active;
         this.faderLevel = faderLevel;
         this.cue = cue;
         this.name = "Channel " + channelId;
+        this.pgm = true;
+        this.sub = true;
     }
 
     public boolean isFaderActive() {

@@ -13,15 +13,15 @@ public class AuronProcessor {
     private final List<AuronHandler> handlers = new ArrayList<>();
 
     public AuronProcessor() {
+        handlers.add(new InitialStatesHandler());
         handlers.add(new ModuleHandler());
         handlers.add(new FaderHandler());
         handlers.add(new CueHandler());
         handlers.add(new MicrophoneHandler());
         handlers.add(new ButtonHandler());
-        handlers.add(new InitialStatesHandler());
         handlers.add(new MeteringHandler());
         handlers.add(new ModuleActiveHandler());
-        handlers.add(new ModuleMeteringHandler());
+        handlers.add(new RouteHandler());
     }
 
     public void process(String msg, JsonObject param) {

@@ -34,18 +34,8 @@ public class AuronSocket extends WebSocketClient {
         paramArray.add("cue");
         paramArray.add("fader");
         paramArray.add("on");
+        paramArray.add("config_route");
         paramArray.add("metering:master");
-        paramArray.add("metering:module_1");
-        paramArray.add("metering:module_2");
-        paramArray.add("metering:module_3");
-        paramArray.add("metering:module_4");
-        paramArray.add("metering:module_5");
-        paramArray.add("metering:module_6");
-        paramArray.add("metering:module_7");
-        paramArray.add("metering:module_8");
-        paramArray.add("metering:module_9");
-        paramArray.add("metering:module_10");
-        paramArray.add("metering:module_10");
 
         auronModule.sendToSocket("subscribe", paramArray);
         auronModule.sendToSocket("get_all", new JsonArray());

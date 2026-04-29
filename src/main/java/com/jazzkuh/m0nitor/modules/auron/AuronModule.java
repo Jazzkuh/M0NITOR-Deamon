@@ -4,12 +4,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.auron.Module;
-import com.jazzkuh.m0nitor.framework.auron.button.ButtonTrigger;
-import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
-import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
+import com.jazzkuh.m0nitor.framework.auron.button.*;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.modules.auron.listeners.AuronSocket;
 import com.jazzkuh.m0nitor.modules.auron.registry.ButtonTriggerRegistry;
+import com.jazzkuh.m0nitor.modules.auron.registry.ModuleButtonTriggerRegistry;
 import com.jazzkuh.m0nitor.modules.auron.tasks.FlashingTask;
 import com.jazzkuh.m0nitor.modules.web.WebModule;
 import com.jazzkuh.m0nitor.utils.EmberLedUtil;
@@ -70,6 +69,9 @@ public class AuronModule extends GenericModule {
         for (int i = 1; i <= 10; i++) {
             modules.put(i, new Module(i, false, 0, false));
         }
+
+        EmberLedUtil.writeAll(this, ControlLedColor.OFF);
+        EmberLedUtil.writeAllModuleButtons(this, ControlLedColor.OFF);
     }
 
     @Override
@@ -87,8 +89,6 @@ public class AuronModule extends GenericModule {
             PhilipsWizLightController.setState(ledBulb, false);
         }
 
-
-        EmberLedUtil.writeAll(this, ControlLedColor.OFF);
         for (ButtonTrigger buttonTrigger : ButtonTriggerRegistry.getTriggers().keySet()) {
             ControlButton controlButton = buttonTrigger.getControlButton();
             EmberLedUtil.writeStaticLed(this, controlButton, controlButton.getDefaultLedColor());
@@ -109,6 +109,7 @@ public class AuronModule extends GenericModule {
     @Override
     public void onDisable() {
         EmberLedUtil.writeAll(this, ControlLedColor.OFF);
+        EmberLedUtil.writeAllModuleButtons(this, ControlLedColor.OFF);
     }
 
     public void sendToSocket(String command, JsonElement param) {

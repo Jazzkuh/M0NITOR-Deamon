@@ -7,10 +7,6 @@ import com.jazzkuh.m0nitor.modules.auron.trigger.fader.OnAirLightTrigger;
 import com.jazzkuh.m0nitor.modules.auron.trigger.fader.RegularLightTrigger;
 import com.jazzkuh.m0nitor.modules.auron.trigger.fader.music.MusicPauseTrigger;
 import com.jazzkuh.m0nitor.modules.auron.trigger.fader.music.MusicSkipStartTrigger;
-import com.jazzkuh.m0nitor.modules.omniplayer.trigger.GpiFourTrigger;
-import com.jazzkuh.m0nitor.modules.omniplayer.trigger.GpiOneTrigger;
-import com.jazzkuh.m0nitor.modules.omniplayer.trigger.GpiThreeTrigger;
-import com.jazzkuh.m0nitor.modules.omniplayer.trigger.GpiTwoTrigger;
 
 import java.util.HashMap;
 import java.util.Map;

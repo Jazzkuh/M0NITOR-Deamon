@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlLedBlinkSpeed;
 import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
+import com.jazzkuh.m0nitor.framework.auron.button.ModuleButton;
 import com.jazzkuh.m0nitor.modules.auron.AuronModule;
 import lombok.experimental.UtilityClass;
 
@@ -28,6 +29,25 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class EmberLedUtil {
+    public static void writeStaticLed(AuronModule module, ModuleButton button, ControlLedColor color) {
+        sendSetValue(module, button.getEmberOnColorPath(), color.getEmberValue());
+        sendSetValue(module, button.getEmberBlinkModePath(), ControlLedBlinkSpeed.STATIC.getEmberValue());
+    }
+
+    public static void writeBlinkingLed(AuronModule module, ModuleButton button,
+                                        ControlLedColor onColor, ControlLedColor offColor,
+                                        ControlLedBlinkSpeed speed) {
+        sendSetValue(module, button.getEmberOnColorPath(), onColor.getEmberValue());
+        sendSetValue(module, button.getEmberOffColorPath(), offColor.getEmberValue());
+        sendSetValue(module, button.getEmberBlinkModePath(), speed.getEmberValue());
+    }
+
+    public static void writeAllModuleButtons(AuronModule module, ControlLedColor color) {
+        for (ModuleButton button : ModuleButton.values()) {
+            writeStaticLed(module, button, color);
+        }
+    }
+
     public static void writeStaticLed(AuronModule module, ControlButton button, ControlLedColor color) {
         sendSetValue(module, button.getEmberOnColorPath(), color.getEmberValue());
         sendSetValue(module, button.getEmberBlinkModePath(), ControlLedBlinkSpeed.STATIC.getEmberValue());
