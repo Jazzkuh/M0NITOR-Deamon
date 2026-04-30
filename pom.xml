@@ -121,7 +121,7 @@
                 <configuration>
                     <plist>
                         <CFBundleName>M0NITOR Deamon</CFBundleName>
-                        <CFBundleIconFile>src/main/resources/app.icns</CFBundleIconFile>
+                        <CFBundleIconFile>src/main/resources/app.png</CFBundleIconFile>
                         <JVMMainClassName>com.jazzkuh.m0nitor.Bootstrap</JVMMainClassName>
                     </plist>
                     <codesign>

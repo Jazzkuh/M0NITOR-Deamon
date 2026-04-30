@@ -1,13 +1,6 @@
 package com.jazzkuh.m0nitor;
 
 import ch.qos.logback.classic.Level;
-import com.jazzkuh.m0nitor.framework.auron.button.ButtonTrigger;
-import com.jazzkuh.m0nitor.framework.auron.button.ControlButton;
-import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
-import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
-import com.jazzkuh.m0nitor.modules.auron.AuronModule;
-import com.jazzkuh.m0nitor.modules.auron.registry.ButtonTriggerRegistry;
-import com.jazzkuh.m0nitor.utils.EmberLedUtil;
 import com.jazzkuh.m0nitor.utils.TrayIconUtils;
 import com.jazzkuh.m0nitor.utils.hue.HueController;
 import com.jazzkuh.m0nitor.utils.music.MusicEngine;
@@ -46,7 +39,7 @@ public final class Deamon {
         setLogger(LoggerFactory.getLogger(getClass().getSimpleName()));
         ((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME)).setLevel(Level.INFO);
 
-        URL imageUrl = this.getClass().getClassLoader().getResource("app.png");
+        URL imageUrl = this.getClass().getClassLoader().getResource("tray.png");
         Image image = Toolkit.getDefaultToolkit().createImage(imageUrl);
         this.hueController = new HueController();
 

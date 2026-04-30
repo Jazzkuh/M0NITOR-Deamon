@@ -7,14 +7,17 @@ import com.jazzkuh.m0nitor.framework.auron.button.ControlLedColor;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.modules.auron.AuronModule;
 import com.jazzkuh.m0nitor.modules.auron.registry.ButtonTriggerRegistry;
+import com.jazzkuh.m0nitor.utils.logging.LogViewerWindow;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import java.awt.*;
+import javax.swing.SwingUtilities;
 
 @UtilityClass
 public class TrayIconUtils {
     private final AuronModule auronModule = Deamon.getModuleManager().get(AuronModule.class);
+    private static LogViewerWindow logViewerWindow;
 
     @SneakyThrows
     public static void create(Image image) {
@@ -22,6 +25,13 @@ public class TrayIconUtils {
         SystemTray systemTray = SystemTray.getSystemTray();
 
         PopupMenu trayPopupMenu = new PopupMenu();
+
+        MenuItem logsItem = new MenuItem("View Logs");
+        logsItem.addActionListener(actionEvent -> SwingUtilities.invokeLater(() -> {
+            if (logViewerWindow == null) logViewerWindow = new LogViewerWindow();
+            logViewerWindow.setVisible(true);
+        }));
+        trayPopupMenu.add(logsItem);
 
         MenuItem repairItem = new MenuItem("Repair");
         repairItem.addActionListener(actionEvent -> {

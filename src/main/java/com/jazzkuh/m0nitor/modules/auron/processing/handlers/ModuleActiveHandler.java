@@ -30,7 +30,7 @@ public class ModuleActiveHandler extends AuronHandler {
             TriggerAction triggerAction = ChannelTriggerRegistry.getAction(channelTrigger);
             if (triggerAction != null) {
                 triggerAction.process();
-                System.out.println("Triggered action for channel " + channelId + ": " + triggerAction.getClass().getSimpleName());
+                Deamon.getLogger().info("Triggered action for channel " + channelId + ": " + triggerAction.getClass().getSimpleName());
             }
         }
     }

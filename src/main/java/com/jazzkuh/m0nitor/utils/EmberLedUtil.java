@@ -29,6 +29,14 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class EmberLedUtil {
+    public static void writeChannelLed(AuronModule module, int channel, ControlLedColor color) {
+        String colorPath = "0.1." + (channel - 1) + ".5.3.2";
+        String blinkMode = "0.1." + (channel - 1) + ".5.3.1";
+
+        sendSetValue(module, colorPath, color.getEmberValue());
+        sendSetValue(module, blinkMode, ControlLedBlinkSpeed.STATIC.getEmberValue());
+    }
+
     public static void writeStaticLed(AuronModule module, ModuleButton button, ControlLedColor color) {
         sendSetValue(module, button.getEmberOnColorPath(), color.getEmberValue());
         sendSetValue(module, button.getEmberBlinkModePath(), ControlLedBlinkSpeed.STATIC.getEmberValue());

@@ -26,7 +26,7 @@ public class RouteHandler extends AuronHandler {
     public void process(String msg, JsonObject param) {
         for (Map.Entry<String, com.google.gson.JsonElement> entry : param.entrySet()) {
             int channelId = Integer.parseInt(entry.getKey().split("_")[1]);
-            System.out.println("Processing channel " + channelId + ": " + entry.getValue().getAsJsonObject().toString());
+            Deamon.getLogger().info("Processing channel " + channelId + ": " + entry.getValue().getAsJsonObject().toString());
 
             String bus = entry.getValue().getAsJsonObject().entrySet().iterator().next().getKey();
             boolean value = entry.getValue().getAsJsonObject().get(bus).getAsBoolean();
@@ -35,7 +35,7 @@ public class RouteHandler extends AuronHandler {
             switch (bus) {
                 case "pgm" -> module.setPgm(value);
                 case "sub" -> module.setSub(value);
-                default -> System.out.println("Channel " + channelId + " has an unknown routing: " + bus);
+                default -> Deamon.getLogger().info("Channel " + channelId + " has an unknown routing: " + bus);
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.jazzkuh.m0nitor.modules.auron.processing;
 
 import com.google.gson.JsonObject;
+import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.auron.AuronHandler;
 import com.jazzkuh.m0nitor.modules.auron.processing.handlers.*;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class AuronProcessor {
                 handler.process(msg, param);
             }
         } catch (Exception exception) {
-            System.out.println("Error while receiving data: " + exception.getMessage());
+            Deamon.getLogger().info("Error while receiving data: " + exception.getMessage());
         }
     }
 }

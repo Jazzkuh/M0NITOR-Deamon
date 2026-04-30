@@ -1,5 +1,6 @@
 package com.jazzkuh.m0nitor.utils.hue;
 
+import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.utils.Concurrency;
 import com.jazzkuh.m0nitor.utils.FileUtils;
 import io.github.zeroone3010.yahueapi.HueBridgeConnectionBuilder;
@@ -59,7 +60,7 @@ public class HueController {
     private void fetchToken(String bridgeIp) {
         CompletableFuture<String> apiKey = new HueBridgeConnectionBuilder(bridgeIp).initializeApiConnection("M0NITOR");
         apiKey.whenComplete((key, err) -> {
-            System.out.println("Store this API key for future use: " + key);
+            Deamon.getLogger().info("Store this API key for future use: " + key);
         });
     }
 

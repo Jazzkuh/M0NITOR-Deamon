@@ -18,7 +18,7 @@ public class SpotifyEventListener implements SpotifyListener {
 
     @Override
     public void onConnect() {
-        System.out.println("Connected to Spotify");
+        Deamon.getLogger().info("Connected to Spotify");
     }
 
     @Override
@@ -46,7 +46,7 @@ public class SpotifyEventListener implements SpotifyListener {
 
     @Override
     public void onDisconnect(Exception exception) {
-        System.out.println("Disconnected");
+        Deamon.getLogger().info("Disconnected");
 
         ReconnectDelay next = ReconnectDelay.DEFAULT.next();
         this.musicEngine.initializeSpotifyAPI(next, true);

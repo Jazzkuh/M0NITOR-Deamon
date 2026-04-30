@@ -1,13 +1,17 @@
 <configuration debug="true">
     <conversionRule conversionWord="highlightex" converterClass="com.jazzkuh.m0nitor.utils.logging.CustomLoggerColorHighlighter"/>
+    <conversionRule conversionWord="colorprefix" converterClass="com.jazzkuh.m0nitor.utils.logging.ColorPrefixConverter"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-<!--        <withJansi>true</withJansi>-->
         <encoder>
-            <pattern>%highlightex([%d{HH:mm:ss} %level]: %logger{36} - %msg) %n</pattern>
+            <pattern>%colorprefix%n</pattern>
         </encoder>
     </appender>
+
+    <appender name="LOG_BUFFER" class="com.jazzkuh.m0nitor.utils.logging.LogAppender"/>
+
     <root level="debug">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="LOG_BUFFER" />
     </root>
 </configuration>

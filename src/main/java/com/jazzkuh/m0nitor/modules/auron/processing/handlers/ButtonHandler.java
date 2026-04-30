@@ -34,7 +34,7 @@ public class ButtonHandler extends AuronHandler {
 
                 ModuleButton moduleButton = ModuleButton.by(Integer.parseInt(module), switchKey);
                 if (moduleButton == null) {
-                    System.out.println("Unknown module button: " + key);
+                    Deamon.getLogger().info("Unknown module button: " + key);
                     continue;
                 }
 
@@ -48,14 +48,14 @@ public class ButtonHandler extends AuronHandler {
                     }
                 }
 
-                System.out.println("Received module state change: " + key + " = " + value + ", Mapped Key: " + switchKey);
+                Deamon.getLogger().info("Received module state change: " + key + " = " + value + ", Mapped Key: " + switchKey);
 
                 ModuleButtonTrigger moduleButtonTrigger = new ModuleButtonTrigger(moduleButton, pressed ? TriggerType.MODULE_BUTTON_PRESSED : TriggerType.MODULE_BUTTON_RELEASED);
                 TriggerAction triggerAction = ModuleButtonTriggerRegistry.getAction(moduleButtonTrigger);
 
                 if (triggerAction != null) {
                     triggerAction.process();
-                    System.out.println("Triggered action for module button " + key + ": " + triggerAction.getClass().getSimpleName());
+                    Deamon.getLogger().info("Triggered action for module button " + key + ": " + triggerAction.getClass().getSimpleName());
                 }
 
                 continue;
@@ -73,14 +73,14 @@ public class ButtonHandler extends AuronHandler {
                 }
             }
 
-            System.out.println("Button: " + key + ", Pressed: " + pressed + ", Mapped Key: " + controlButton);
+            Deamon.getLogger().info("Button: " + key + ", Pressed: " + pressed + ", Mapped Key: " + controlButton);
 
             ButtonTrigger buttonTrigger = new ButtonTrigger(controlButton, pressed ? TriggerType.BUTTON_PRESSED : TriggerType.BUTTON_RELEASED);
             TriggerAction triggerAction = ButtonTriggerRegistry.getAction(buttonTrigger);
 
             if (triggerAction != null) {
                 triggerAction.process();
-                System.out.println("Triggered action for button " + key + ": " + triggerAction.getClass().getSimpleName());
+                Deamon.getLogger().info("Triggered action for button " + key + ": " + triggerAction.getClass().getSimpleName());
             }
         }
     }

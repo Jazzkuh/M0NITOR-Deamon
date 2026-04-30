@@ -2,6 +2,7 @@ package com.jazzkuh.m0nitor.modules.web;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.auron.Module;
 import com.jazzkuh.m0nitor.modules.auron.AuronModule;
 import com.jazzkuh.m0nitor.modules.web.server.WebServer;
@@ -39,7 +40,7 @@ public class WebModule extends GenericModule {
 
     @Override
     public void onDisable() {
-        System.out.println("WebModule disabled");
+        Deamon.getLogger().info("WebModule disabled");
     }
 
     public JsonObject getJson() {

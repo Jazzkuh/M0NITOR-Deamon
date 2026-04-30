@@ -1,5 +1,6 @@
 package com.jazzkuh.m0nitor.utils.lighting;
 
+import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.utils.Concurrency;
 import com.jazzkuh.m0nitor.utils.lighting.bulb.Bulb;
 import lombok.Getter;
@@ -40,7 +41,7 @@ public class PhilipsWizLightController {
     public static void setColorTemperature(Bulb bulb, int temperature, int brightness) {
         // Range of possible temperatures: 2700K to 6500K
         if (temperature < 2700 || temperature > 6500) {
-            System.out.println("Invalid color temperature. The valid range is 2700K to 6500K.");
+            Deamon.getLogger().info("Invalid color temperature. The valid range is 2700K to 6500K.");
             return;
         }
         String message = String.format("{\"method\":\"setPilot\",\"params\":{\"temp\":%d,\"dimming\":%d}}",
@@ -51,7 +52,7 @@ public class PhilipsWizLightController {
     @SneakyThrows
     public static void setState(Bulb bulb, boolean on) {
         if (bulb == null) {
-            System.out.println("Bulb is null.");
+            Deamon.getLogger().info("Bulb is null.");
             return;
         }
         String message = String.format("{\"method\":\"setPilot\",\"params\":{\"state\":" + (on ? "true" : "false") + "}}");
@@ -80,7 +81,7 @@ public class PhilipsWizLightController {
             DatagramPacket packet = new DatagramPacket(sendData, sendData.length, address, BULB_PORT);
 
             socket.send(packet);
-            System.out.println("Sent to " + ipAddress + ": " + message);
+            Deamon.getLogger().info("Sent to " + ipAddress + ": " + message);
         } catch (IOException exception) {
             System.err.println("Failed to send message to " + ipAddress + ": " + exception.getMessage());
         }

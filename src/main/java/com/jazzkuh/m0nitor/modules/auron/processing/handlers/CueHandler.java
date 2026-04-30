@@ -29,7 +29,7 @@ public class CueHandler extends AuronHandler {
             Module module = auronModule.getModules().get(channelId);
             module.setCue(active);
 
-            System.out.println("Fader: " + channelId + ", Cue on: " + active);
+            Deamon.getLogger().info("Fader: " + channelId + ", Cue on: " + active);
 
             boolean faderActive = module.isFaderActive();
             TriggerType triggerType = active ? (faderActive ? TriggerType.CUE_ON : TriggerType.FADER_OFF_CUE_ON) : (faderActive ? TriggerType.CUE_OFF : TriggerType.FADER_OFF_CUE_OFF);
@@ -38,7 +38,7 @@ public class CueHandler extends AuronHandler {
             TriggerAction triggerAction = ChannelTriggerRegistry.getAction(channelTrigger);
             if (triggerAction != null) {
                 triggerAction.process();
-                System.out.println("Triggered action for channel " + channelId + ": " + triggerAction.getClass().getSimpleName());
+                Deamon.getLogger().info("Triggered action for channel " + channelId + ": " + triggerAction.getClass().getSimpleName());
             }
         }
     }

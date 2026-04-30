@@ -49,33 +49,33 @@ public class OmniModule extends GenericModule {
 
     @Override
     public void onLoad() {
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.MODULE_ACTIVE), GpiOneTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.MODULE_INACTIVE), GpiTwoTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_ON), GpiElevenTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_ON), GpiElevenTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_OFF), GpiTwelveTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_OFF), GpiTwelveTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.MODULE_ACTIVE), new GpiOneTrigger());
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.MODULE_INACTIVE), new GpiTwoTrigger());
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_ON), new GpiElevenTrigger());
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_ON), new GpiElevenTrigger());
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_OFF), new GpiTwelveTrigger());
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_OFF), new GpiTwelveTrigger());
 
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(6, TriggerType.MODULE_ACTIVE), GpiFiveTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(6, TriggerType.MODULE_INACTIVE), GpiSixTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(6, TriggerType.MODULE_ACTIVE), new GpiFiveTrigger());
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(6, TriggerType.MODULE_INACTIVE), new GpiSixTrigger());
 
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(7, TriggerType.MODULE_ACTIVE), GpiSevenTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(7, TriggerType.MODULE_INACTIVE), GpiEightTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(7, TriggerType.MODULE_ACTIVE), new GpiSevenTrigger());
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(7, TriggerType.MODULE_INACTIVE), new GpiEightTrigger());
 
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(8, TriggerType.MODULE_ACTIVE), GpiNineTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(8, TriggerType.MODULE_INACTIVE), GpiTenTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(8, TriggerType.MODULE_ACTIVE), new GpiNineTrigger());
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(8, TriggerType.MODULE_INACTIVE), new GpiTenTrigger());
 
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.CUE_ON), GpiThriteenTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.FADER_OFF_CUE_ON), GpiThriteenTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.FADER_OFF_CUE_OFF), GpiFourteenTrigger.class);
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.CUE_OFF), GpiFourteenTrigger.class);
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.CUE_ON), new GpiThriteenTrigger());
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.FADER_OFF_CUE_ON), new GpiThriteenTrigger());
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.FADER_OFF_CUE_OFF), new GpiFourteenTrigger());
+        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.CUE_OFF), new GpiFourteenTrigger());
     }
 
     @Override
     public void onEnable() {
         gpioModule = new GpioModule("192.168.1.183", 4740);
         gpioModule.setResponseHandler( response -> {
-            System.out.println("Received GPIO response: " + response);
+            Deamon.getLogger().info("Received GPIO response: " + response);
         });
 
         gpioModule.connect();

@@ -1,6 +1,7 @@
 package com.jazzkuh.m0nitor.modules.auron.processing.handlers;
 
 import com.google.gson.JsonObject;
+import com.jazzkuh.m0nitor.Deamon;
 import com.jazzkuh.m0nitor.framework.auron.channel.ChannelTrigger;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerAction;
 import com.jazzkuh.m0nitor.framework.auron.trigger.TriggerType;
@@ -29,7 +30,7 @@ public class MicrophoneHandler extends AuronHandler {
             TriggerAction triggerAction = ChannelTriggerRegistry.getAction(channelTrigger);
             if (triggerAction != null) {
                 triggerAction.process();
-                System.out.println("Triggered action for microphone " + onAirKey + ": " + triggerAction.getClass().getSimpleName());
+                Deamon.getLogger().info("Triggered action for microphone " + onAirKey + ": " + triggerAction.getClass().getSimpleName());
             }
         }
     }
