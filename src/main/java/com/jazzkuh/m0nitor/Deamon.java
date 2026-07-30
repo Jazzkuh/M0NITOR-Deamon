@@ -43,6 +43,8 @@ public final class Deamon {
         Image image = Toolkit.getDefaultToolkit().createImage(imageUrl);
         this.hueController = new HueController();
 
+
+        
         setModuleManager(new GenericModuleManager(logger));
         moduleManager.scanModules(getClass());
         moduleManager.load();

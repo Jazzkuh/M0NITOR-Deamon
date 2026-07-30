@@ -1,6 +1,7 @@
 package com.jazzkuh.m0nitor.modules.omniplayer.gpio;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
@@ -42,6 +43,12 @@ public class GpioModule {
 
     private Socket socket;
     private PrintWriter writer;
+    /**
+     * -- SETTER --
+     *  Sets a handler called for every response line received from the plugin.
+     *  Useful for reading GET_INPUT_CONTACTS / GET_OUTPUT_CONTACTS replies.
+     */
+    @Setter
     private Consumer<String> responseHandler;
 
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
@@ -53,14 +60,6 @@ public class GpioModule {
     public GpioModule(String host, int port) {
         this.host = host;
         this.port = port;
-    }
-
-    /**
-     * Sets a handler called for every response line received from the plugin.
-     * Useful for reading GET_INPUT_CONTACTS / GET_OUTPUT_CONTACTS replies.
-     */
-    public void setResponseHandler(Consumer<String> handler) {
-        this.responseHandler = handler;
     }
 
     /**

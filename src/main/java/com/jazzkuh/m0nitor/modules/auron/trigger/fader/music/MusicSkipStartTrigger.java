@@ -14,11 +14,6 @@ public class MusicSkipStartTrigger extends TriggerAction {
 	@Override
 	@SneakyThrows
 	public void process() {
-		if (auronModule.getEnabledButtons().contains("disable_spotify_fader")) {
-            new GpiThreeTrigger().process();
-            return;
-        }
-
 		MusicEngine musicEngine = Deamon.getInstance().getMusicEngine();
 		if (musicEngine.isPlaying()) {
 			EmberLedUtil.writeStaticLed(auronModule, ControlButton.LED_1A, ControlLedColor.RED);

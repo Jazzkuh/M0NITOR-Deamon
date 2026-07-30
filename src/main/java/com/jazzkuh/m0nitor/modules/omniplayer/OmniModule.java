@@ -51,10 +51,10 @@ public class OmniModule extends GenericModule {
     public void onLoad() {
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.MODULE_ACTIVE), new GpiOneTrigger());
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.MODULE_INACTIVE), new GpiTwoTrigger());
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_ON), new GpiElevenTrigger());
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_ON), new GpiElevenTrigger());
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_OFF), new GpiTwelveTrigger());
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_OFF), new GpiTwelveTrigger());
+//        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_ON), new GpiElevenTrigger());
+//        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_ON), new GpiElevenTrigger());
+//        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.FADER_OFF_CUE_OFF), new GpiTwelveTrigger());
+//        ChannelTriggerRegistry.registerAction(new ChannelTrigger(5, TriggerType.CUE_OFF), new GpiTwelveTrigger());
 
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(6, TriggerType.MODULE_ACTIVE), new GpiFiveTrigger());
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(6, TriggerType.MODULE_INACTIVE), new GpiSixTrigger());
@@ -65,10 +65,10 @@ public class OmniModule extends GenericModule {
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(8, TriggerType.MODULE_ACTIVE), new GpiNineTrigger());
         ChannelTriggerRegistry.registerAction(new ChannelTrigger(8, TriggerType.MODULE_INACTIVE), new GpiTenTrigger());
 
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.CUE_ON), new GpiThriteenTrigger());
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.FADER_OFF_CUE_ON), new GpiThriteenTrigger());
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.FADER_OFF_CUE_OFF), new GpiFourteenTrigger());
-        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.CUE_OFF), new GpiFourteenTrigger());
+//        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.CUE_ON), new GpiThriteenTrigger());
+//        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.FADER_OFF_CUE_ON), new GpiThriteenTrigger());
+//        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.FADER_OFF_CUE_OFF), new GpiFourteenTrigger());
+//        ChannelTriggerRegistry.registerAction(new ChannelTrigger(10, TriggerType.CUE_OFF), new GpiFourteenTrigger());
     }
 
     @Override

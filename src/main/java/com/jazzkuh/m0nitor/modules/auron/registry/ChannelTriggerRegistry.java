@@ -10,19 +10,24 @@ import com.jazzkuh.m0nitor.modules.auron.trigger.fader.OnTrigger;
 import com.jazzkuh.m0nitor.modules.auron.trigger.fader.RegularLightTrigger;
 import com.jazzkuh.m0nitor.modules.auron.trigger.fader.music.MusicPauseTrigger;
 import com.jazzkuh.m0nitor.modules.auron.trigger.fader.music.MusicSkipStartTrigger;
+import com.jazzkuh.m0nitor.modules.omniplayer.trigger.GpiFourTrigger;
+import com.jazzkuh.m0nitor.modules.omniplayer.trigger.GpiThreeTrigger;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChannelTriggerRegistry {
 	private static Map<ChannelTrigger, TriggerAction> triggers = new HashMap<>();
-    private static final int spotifyChannel = 10;
+    private static final int spotifyChannel = 2;
 
 	static {
 		registerAction(new ChannelTrigger(TriggerType.MICROPHONE_ON), new OnAirLightTrigger());
 		registerAction(new ChannelTrigger(TriggerType.MICROPHONE_OFF), new RegularLightTrigger());
 		registerAction(new ChannelTrigger(spotifyChannel, TriggerType.MODULE_ACTIVE), new MusicSkipStartTrigger());
 		registerAction(new ChannelTrigger(spotifyChannel, TriggerType.MODULE_INACTIVE), new MusicPauseTrigger());
+
+        registerAction(new ChannelTrigger(10, TriggerType.MODULE_ACTIVE), new GpiThreeTrigger());
+        registerAction(new ChannelTrigger(10, TriggerType.MODULE_INACTIVE), new GpiFourTrigger());
 	}
 
     public static void registerAction(ChannelTrigger channelTrigger, TriggerAction triggerAction) {
